@@ -1,30 +1,24 @@
 import React from "react";
-//import bridge from "@vkontakte/vk-bridge";
+import bridge from "@vkontakte/vk-bridge";
 import qs from "querystring";
 import { Route, HashRouter, Switch, NavLink } from "react-router-dom";
 import Transition from "react-transition-group/Transition";
 
-import DepressionTest from "./DepressionTest";
-import EmpathyTest from "./EmpathyTest";
-import ColorLoveTest from "./ColorLoveTest";
-import EQTest from "./EQTest";
+import FindFriend from "./FindFriend";
 
 import "../App.css";
-
-import testsInfo from "../data/testsInfo.js";
 
 class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      testInfo: "",
+      posts: [],
       headerStyles: {},
 
       show: false,
     };
 
     this.getTests = this.getTests.bind(this);
-    this.setModalText = this.setModalText.bind(this);
     this.getHeaderStyle = this.getHeaderStyle.bind(this);
     this.showAnimation = this.showAnimation.bind(this);
   }
@@ -65,41 +59,16 @@ class Main extends React.Component {
   }
 
   getTests() {
-    let response = testsInfo.map((test, i) => {
+    let response = this.state.posts.map((post, i) => {
       return (
         <div key={i}>
-          <Transition in={this.state.show} timeout={500 + i * 200}>
+          <Transition in={this.state.show} timeout={200 + i * 150}>
             {(state) => {
               return (
                 <div
-                  className={"testView" + "-" + state}
-                  style={{ backgroundColor: test.color }}
-                >
-                  <div className="testTitle">{test.title}</div>
-                  <button
-                    type="button"
-                    className="infoBtn"
-                    style={{ backgroundColor: test.color }}
-                    data-toggle="modal"
-                    data-target="#infoModal"
-                    onClick={(e) => this.setModalText(test.text, e)}
-                  >
-                    <i className="fas fa-info-circle"></i> инфо
-                  </button>
-                  <br />
-                  <NavLink to={test.url}>
-                    <button
-                      type="button"
-                      className="testComeInBtn"
-                      style={{ borderColor: test.color, color: test.color }}
-                    >
-                      пройти тест
-                    </button>
-                  </NavLink>
-                  <div className="testCount">
-                    кол-во вопросов: {test.questionsCount}
-                  </div>
-                </div>
+                  className={"postView" + "-" + state}
+                  style={{ backgroundColor: post.color }}
+                ></div>
               );
             }}
           </Transition>
@@ -111,52 +80,22 @@ class Main extends React.Component {
   }
 
   render() {
-    let tests = this.getTests();
+    // let posts = this.getTests();
     let styles = this.state.headerStyles;
 
     return (
       <div>
-        <div className="modal fade" id="infoModal" tabIndex="-1" role="dialog">
-          <div className="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">О тесте</h5>
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                <div className="testText">{this.state.testInfo}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div className="Header" style={styles.header}>
-          Мαú-тесты
+          Мαú-френдс
         </div>
         <div className="Body" style={styles.body}>
           <HashRouter>
             <Switch>
+              {/* <Route exact path="/">
+                {posts}
+              </Route> */}
               <Route exact path="/">
-                {tests}
-              </Route>
-              <Route exact path="/test-depression">
-                <DepressionTest />
-              </Route>
-              <Route exact path="/test-empathy">
-                <EmpathyTest />
-              </Route>
-              <Route exact path="/test-colorlove">
-                <ColorLoveTest />
-              </Route>
-              <Route exact path="/test-eq">
-                <EQTest />
+                <FindFriend />
               </Route>
             </Switch>
           </HashRouter>
@@ -164,6 +103,13 @@ class Main extends React.Component {
             <div className="copyrightText">Май</div>
           </a>
         </div>
+        {/* <div className="footer">
+          <NavLink className="linkStyle" to="/search">
+            <div className="btnFooter">
+              <i className="fas fa-search"></i>
+            </div>
+          </NavLink>
+        </div> */}
       </div>
     );
   }

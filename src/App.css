@@ -13,21 +13,6 @@
   height: 4px;
 }
 
-.testView-enter {
-  opacity: 0;
-}
-.testView-enter-active {
-  opacity: 1;
-  transition: opacity 200ms;
-}
-.testView-exit {
-  opacity: 1;
-}
-.testView-exit-active {
-  opacity: 0;
-  transition: opacity 200ms;
-}
-
 .modal-dialog-centered.modal-dialog-scrollable .modal-content {
   max-height: 80%;
   -webkit-overflow-scrolling: touch;
@@ -66,98 +51,22 @@
   padding: 0px 10px 20px 10px;
 }
 
-.testView-entering {
+.postView-entering {
   position: relative;
-  width: 95%;
-  margin: 0px 10px;
-  padding: 0px;
+  width: 100%;
+  margin: 10px 0;
   border-radius: 10px;
+  box-shadow: 0px 3px solid black;
   background-color: white;
-  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.8);
-  text-align: center;
   opacity: 0;
 }
 
-.testView-entered {
+.postView-entered {
   position: relative;
-  width: 95%;
-  margin: 20px 10px;
-  padding: 10px;
+  width: 100%;
+  margin: 10px 0;
   border-radius: 10px;
+  box-shadow: 0px 3px solid black;
   background-color: white;
-  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.8);
-  text-align: center;
   opacity: 1;
-  transition: 1s all;
-}
-
-.testTitle {
-  position: relative;
-  z-index: 1;
-  max-width: 100%;
-  margin-top: 10px;
-  font-weight: 500;
-  font-size: 24px;
-  color: rgba(0, 0, 0, 0.8);
-}
-
-.testText {
-  width: 100%;
-  font-size: 16px;
-  font-weight: 500;
-  color: rgba(0, 0, 0, 0.8);
-}
-
-.infoBtn {
-  position: relative;
-  display: inline-block;
-  padding: 2px 10px 3px 10px;
-  margin-top: 15px;
-  font-size: 13px;
-  font-weight: 500;
-  border: none;
-  border-radius: 10px;
-  background-color: rgba(37, 37, 51);
-  color: rgb(37, 37, 51);
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.4);
-}
-.infoBtn:hover,
-.infoBtn:focus {
-  cursor: pointer;
-  outline: none;
-  background-color: black;
-}
-
-.testCount {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  margin: 20px 0;
-  font-size: 16px;
-  font-weight: 500;
-  color: rgba(0, 0, 0, 0.5);
-}
-
-.testComeInBtn {
-  -webkit-appearance: none;
-  position: relative;
-  display: inline-block;
-  z-index: 1;
-  margin-top: 20px;
-  font-weight: 500;
-  font-size: 18px;
-  padding: 3px 15px;
-  border-radius: 10px;
-  border: 2px solid #dbbbff;
-  color: #dbbbff;
-  padding: 3px 20px;
-  background-color: rgb(37, 37, 51);
-  outline: none;
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.5);
-}
-.testComeInBtn:hover,
-.testComeInBtn:focus {
-  cursor: pointer;
-  outline: none;
-  background-color: black;
 }
