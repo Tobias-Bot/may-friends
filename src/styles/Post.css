@@ -1,0 +1,100 @@
+.postView {
+  position: relative;
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 3px solid black;
+}
+
+.postView {
+  position: relative;
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 3px solid black;
+}
+
+.postHeader-entering {
+  position: relative;
+  display: inline-block;
+  margin: 0px 0px 15px 0px;
+  padding: 0 0 5px 0;
+  color: rgb(216, 211, 255);
+  font-size: 16px;
+  font-weight: 500;
+  opacity: 0;
+}
+.postHeader-entered {
+  position: relative;
+  display: inline-block;
+  margin: 20px 0px 15px 10px;
+  padding: 0 0 5px 0;
+  color: rgb(216, 211, 255);
+  font-size: 16px;
+  font-weight: 500;
+  opacity: 1;
+  transition: 0.5s all;
+}
+.postHeader:hover {
+  cursor: pointer;
+}
+
+.postText-entering {
+  position: relative;
+  width: 90%;
+  padding: 8px;
+  margin-left: 0px;
+  border-radius: 0px 10px 10px 10px;
+  background-color: #dee1ff;
+  color: rgb(0, 0, 0, 0.8);
+  font-size: 15px;
+  font-weight: 500;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.6);
+  opacity: 0;
+}
+
+.postText-entered {
+    position: relative;
+    width: 90%;
+    padding: 10px 15px 30px 10px;
+    margin-left: 15px;
+    border-radius: 0px 20px 20px 20px;
+    background-color: #dee1ff;
+    color: rgb(0, 0, 0, 0.8);
+    font-size: 15px;
+    font-weight: 500;
+    box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.6);
+    opacity: 1;
+    transition: 0.5s all;
+  }
+
+.postPhoto {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border-radius: 100px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+}
+.postPhoto:hover {
+  cursor: pointer;
+}
+
+.postLikeBtn {
+  position: absolute;
+  bottom: -10px;
+  right: 45px;
+  height: 50px;
+  width: 50px;
+  padding: 8px;
+  font-size: 22px;
+  color: rgba(0, 0, 0, 0.9);
+  background-color: rgb(255, 195, 247);
+  border-radius: 100px;
+  text-align: center;
+  box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.7);
+  transition: 0.5s all;
+}
+.postLikeBtn:hover {
+  cursor: pointer;
+}

@@ -1,7 +1,9 @@
 import React from "react";
 import bridge from "@vkontakte/vk-bridge";
 // import { Route, HashRouter, Switch, NavLink } from "react-router-dom";
-import Transition from "react-transition-group/Transition";
+// import Transition from "react-transition-group/Transition";
+
+import Post from "./Post";
 
 import "../App.css";
 
@@ -10,6 +12,7 @@ class FindFriend extends React.Component {
     super(props);
     this.state = {
       posts: [],
+      savedPosts: [],
 
       show: false,
       postsLoad: true,
@@ -18,9 +21,13 @@ class FindFriend extends React.Component {
     this.offset = 20;
     this.currOffset = 0;
 
+    this.group_id = 140403026;
+
     this.getPosts = this.getPosts.bind(this);
     this.loadPosts = this.loadPosts.bind(this);
     this.getRandom = this.getRandom.bind(this);
+    //this.getSavedPosts = this.getSavedPosts.bind(this);
+    this.likePost = this.likePost.bind(this);
   }
 
   componentDidMount() {
@@ -41,9 +48,16 @@ class FindFriend extends React.Component {
     }
   }
 
+  //   getSavedPosts() {
+  //     let posts = localStorage.getItem("savedPosts");
+
+  //     if (posts) {
+  //       this.setState({ savedPosts: posts.split(",") });
+  //     }
+  //   }
+
   loadPosts() {
-    let posts = this.state.posts;
-    let newPosts = [];
+    //this.getSavedPosts();
 
     bridge
       .send("VKWebAppGetAuthToken", {
@@ -57,7 +71,7 @@ class FindFriend extends React.Component {
           .send("VKWebAppCallAPIMethod", {
             method: "board.getComments",
             params: {
-              group_id: "140403026",
+              group_id: this.group_id,
               topic_id: "46804450",
               need_likes: 1,
               count: this.offset,
@@ -69,7 +83,31 @@ class FindFriend extends React.Component {
             },
           })
           .then((r) => {
-              console.log(r);
+            let comms = r.response.items;
+            let profiles = r.response.profiles;
+            let posts = [];
+
+            for (let i = 0; i < comms.length; i++) {
+              if (-this.group_id !== comms[i].from_id) {
+                let post = {};
+                post.id = comms[i].id;
+                post.likes = comms[i].likes.count;
+                post.text = comms[i].text;
+
+                let index = profiles.findIndex(
+                  (profile) => comms[i].from_id === profile.id
+                );
+
+                post.name = profiles[index].first_name;
+                post.url = `https://vk.com/id${profiles[index].id}`;
+                post.online = profiles[index].online;
+                post.photo = profiles[index].photo_50;
+
+                posts.unshift(post);
+              }
+            }
+
+            this.setState({ posts: [...posts, ...this.state.posts] });
           });
       });
 
@@ -82,24 +120,19 @@ class FindFriend extends React.Component {
     return Math.round(rand);
   }
 
+  likePost(id) {
+    let posts = this.state.savedPosts;
+
+    posts.unshift(id);
+
+    this.setState({ savedPosts: posts });
+
+    localStorage.setItem("savedPosts", posts.join(","));
+  }
+
   getPosts() {
     let response = this.state.posts.map((post, i) => {
-      return (
-        <div key={i}>
-          <Transition in={this.state.show} timeout={200 + i * 150}>
-            {(state) => {
-              return (
-                <div
-                  className={"postView" + "-" + state}
-                  //   style={{ backgroundColor: post.color }}
-                >
-                  {post.text}
-                </div>
-              );
-            }}
-          </Transition>
-        </div>
-      );
+      return <Post key={i} data={post} index={i} />;
     });
 
     return response;
