@@ -1,0 +1,163 @@
+::-webkit-scrollbar-track {
+  background-color: rgb(37, 37, 51);
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+  background-color: rgb(172, 163, 255);
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  height: 4px;
+}
+
+.testView-enter {
+  opacity: 0;
+}
+.testView-enter-active {
+  opacity: 1;
+  transition: opacity 200ms;
+}
+.testView-exit {
+  opacity: 1;
+}
+.testView-exit-active {
+  opacity: 0;
+  transition: opacity 200ms;
+}
+
+.modal-dialog-centered.modal-dialog-scrollable .modal-content {
+  max-height: 80%;
+  -webkit-overflow-scrolling: touch;
+  overflow-x: scroll;
+}
+
+.modal-content {
+  background-color: #ffc9ed;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.Header {
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  width: 100%;
+  height: 50px;
+  border-radius: 0 0 15px 15px;
+  background-color: rgb(37, 37, 51);
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+  color: #dee1ff;
+  font-size: 20px;
+  font-weight: 500;
+  padding: 10px 15px 10px 15px;
+}
+
+.Body {
+  -webkit-overflow-scrolling: touch;
+  position: fixed;
+  width: 100%;
+  top: 50px;
+  height: calc(100% - 50px);
+  overflow-x: hidden;
+  overflow-y: scroll;
+  background-color: rgb(31, 31, 51);
+  padding: 0px 10px 20px 10px;
+}
+
+.testView-entering {
+  position: relative;
+  width: 95%;
+  margin: 0px 10px;
+  padding: 0px;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.8);
+  text-align: center;
+  opacity: 0;
+}
+
+.testView-entered {
+  position: relative;
+  width: 95%;
+  margin: 20px 10px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.8);
+  text-align: center;
+  opacity: 1;
+  transition: 1s all;
+}
+
+.testTitle {
+  position: relative;
+  z-index: 1;
+  max-width: 100%;
+  margin-top: 10px;
+  font-weight: 500;
+  font-size: 24px;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.testText {
+  width: 100%;
+  font-size: 16px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.infoBtn {
+  position: relative;
+  display: inline-block;
+  padding: 2px 10px 3px 10px;
+  margin-top: 15px;
+  font-size: 13px;
+  font-weight: 500;
+  border: none;
+  border-radius: 10px;
+  background-color: rgba(37, 37, 51);
+  color: rgb(37, 37, 51);
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.4);
+}
+.infoBtn:hover,
+.infoBtn:focus {
+  cursor: pointer;
+  outline: none;
+  background-color: black;
+}
+
+.testCount {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  margin: 20px 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.testComeInBtn {
+  -webkit-appearance: none;
+  position: relative;
+  display: inline-block;
+  z-index: 1;
+  margin-top: 20px;
+  font-weight: 500;
+  font-size: 18px;
+  padding: 3px 15px;
+  border-radius: 10px;
+  border: 2px solid #dbbbff;
+  color: #dbbbff;
+  padding: 3px 20px;
+  background-color: rgb(37, 37, 51);
+  outline: none;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.5);
+}
+.testComeInBtn:hover,
+.testComeInBtn:focus {
+  cursor: pointer;
+  outline: none;
+  background-color: black;
+}
