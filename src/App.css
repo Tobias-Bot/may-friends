@@ -69,3 +69,75 @@
   color: #b9bfff;
   opacity: 0.3;
 }
+
+.topicFooter {
+  position: fixed;
+  width: 100%;
+  bottom: 80px;
+  text-align: center;
+}
+
+.postBtn {
+  position: relative;
+  display: inline-block;
+  width: 90px;
+  padding: 5px;
+  font-size: 30px;
+  background-color: rgb(255, 195, 247);
+  color: rgb(37, 37, 51);
+  text-align: center;
+  border-radius: 100px;
+  box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.8);
+}
+
+.inputText {
+  position: relative;
+  width: 100%;
+  padding: 5px 10px;
+  margin: 5px 0;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  background-color: rgb(226, 175, 219);
+  color: rgb(37, 37, 51);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+  border: none;
+  outline: none;
+  resize: none;
+}
+
+.inputStr {
+  position: relative;
+  width: 100%;
+  margin: 8px 0;
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-size: 17px;
+  font-weight: 500;
+  background-color: rgb(226, 175, 219);
+  color: rgb(37, 37, 51);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+  border: none;
+  outline: none;
+}
+
+.inputTitle {
+  position: relative;
+  width: 100%;
+  margin: 20px 0 25px 0;
+  color:rgba(0, 0, 0, 0.8);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.submitBtn {
+  position: relative;
+  display: inline;
+  padding: 5px 10px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #dee1ff;
+  background-color: rgb(37, 37, 51);
+  border-radius: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.8);
+}

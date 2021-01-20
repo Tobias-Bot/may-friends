@@ -56,6 +56,36 @@ class Post extends React.Component {
     this.setState({ savedPosts: posts });
 
     localStorage.setItem("savedPosts", posts.join(","));
+
+    // bridge
+    //   .send("VKWebAppGetAuthToken", {
+    //     app_id: 7734940, //7706189,
+    //     scope: "wall",
+    //   })
+    //   .then((data) => {
+    let token =
+      "1cc15217534a491b2e5486ea6b31f92421c151f365a8e987272660177daa23538874e879e3cbf344f0415"; //data.access_token;
+    let user_id = this.props.data.user_id;
+    let comm_id = this.props.data.id;
+
+    bridge
+      .send("VKWebAppCallAPIMethod", {
+        method: "wall.createComment",
+        params: {
+          owner_id: "-140403026",
+          post_id: "673",
+          message: "hello",
+          from_group: "140403026",
+          v: "5.126",
+          access_token: token,
+        },
+      })
+      .then((r) => {
+        let likesCount = r.response;
+
+        console.log(likesCount);
+      });
+    //});
   }
 
   dislikePost(id) {
@@ -82,7 +112,7 @@ class Post extends React.Component {
 
     return (
       <div>
-        <Transition in={this.state.show} timeout={200 + index * 150}>
+        <Transition in={this.state.show} timeout={200 + index * 200}>
           {(state) => {
             return (
               <div

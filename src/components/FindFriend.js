@@ -16,6 +16,10 @@ class FindFriend extends React.Component {
 
       show: false,
       postsLoad: true,
+
+      city: "",
+      text: "",
+      ps: "",
     };
 
     this.offset = 20;
@@ -26,8 +30,9 @@ class FindFriend extends React.Component {
     this.getPosts = this.getPosts.bind(this);
     this.loadPosts = this.loadPosts.bind(this);
     this.getRandom = this.getRandom.bind(this);
-    //this.getSavedPosts = this.getSavedPosts.bind(this);
+    this.setModalForm = this.setModalForm.bind(this);
     this.likePost = this.likePost.bind(this);
+    this.saveForm = this.saveForm.bind(this);
   }
 
   componentDidMount() {
@@ -48,17 +53,7 @@ class FindFriend extends React.Component {
     }
   }
 
-  //   getSavedPosts() {
-  //     let posts = localStorage.getItem("savedPosts");
-
-  //     if (posts) {
-  //       this.setState({ savedPosts: posts.split(",") });
-  //     }
-  //   }
-
   loadPosts() {
-    //this.getSavedPosts();
-
     bridge
       .send("VKWebAppGetAuthToken", {
         app_id: 7706189,
@@ -69,42 +64,38 @@ class FindFriend extends React.Component {
 
         bridge
           .send("VKWebAppCallAPIMethod", {
-            method: "board.getComments",
+            method: "wall.getComments",
             params: {
-              group_id: this.group_id,
-              topic_id: "46804450",
+              owner_id: "-" + this.group_id,
+              post_id: "673",
               need_likes: 1,
               count: this.offset,
               //offset: this.currOffset,
               sort: "desc",
-              extended: 1,
               v: "5.126",
               access_token: token,
             },
           })
           .then((r) => {
             let comms = r.response.items;
-            let profiles = r.response.profiles;
             let posts = [];
 
             for (let i = 0; i < comms.length; i++) {
-              if (-this.group_id !== comms[i].from_id) {
-                let post = {};
-                post.id = comms[i].id;
-                post.likes = comms[i].likes.count;
-                post.text = comms[i].text;
+              let post = {};
+              post.id = comms[i].id;
+              post.text = comms[i].text;
 
-                let index = profiles.findIndex(
-                  (profile) => comms[i].from_id === profile.id
-                );
+              // let index = profiles.findIndex(
+              //   (profile) => comms[i].from_id === profile.id
+              // );
 
-                post.name = profiles[index].first_name;
-                post.url = `https://vk.com/id${profiles[index].id}`;
-                post.online = profiles[index].online;
-                post.photo = profiles[index].photo_50;
+              // post.name = profiles[index].first_name;
+              // post.url = `https://vk.com/id${profiles[index].id}`;
+              // post.user_id = profiles[index].id;
+              // post.online = profiles[index].online;
+              // post.photo = profiles[index].photo_50;
 
-                posts.unshift(post);
-              }
+              posts.unshift(post);
             }
 
             this.setState({ posts: [...posts, ...this.state.posts] });
@@ -138,10 +129,63 @@ class FindFriend extends React.Component {
     return response;
   }
 
+  saveForm() {
+    let formData = {
+      city: this.state.city,
+      text: this.state.text,
+      ps: this.state.ps,
+    };
+
+    console.log(formData);
+
+    this.props.onSubmitForm(formData);
+  }
+
+  setModalForm() {
+    let form = (
+      <div className="postForm">
+        <input
+          className="inputStr"
+          placeholder="Укажи свой город"
+          onChange={(e) =>
+            this.setState({ city: e.target.value }, this.saveForm())
+          }
+        />
+        <textarea
+          className="inputText"
+          placeholder="Расскажи немного о себе"
+          onChange={this.saveForm}
+        ></textarea>
+        <textarea
+          className="inputText"
+          placeholder="P.S."
+          onChange={this.saveForm}
+        ></textarea>
+      </div>
+    );
+
+    this.props.onSetForm(form);
+  }
+
   render() {
     let posts = this.getPosts();
 
-    return <div>{posts}</div>;
+    return (
+      <div>
+        {posts}
+
+        <div className="topicFooter">
+          <div
+            className="postBtn"
+            data-toggle="modal"
+            data-target="#postModal"
+            onClick={this.setModalForm}
+          >
+            <i className="fas fa-pencil-alt"></i>
+          </div>
+        </div>
+      </div>
+    );
   }
 }
 

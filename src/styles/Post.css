@@ -17,7 +17,7 @@
 .postHeader-entering {
   position: relative;
   display: inline-block;
-  margin: 0px 0px 15px 0px;
+  margin: 20px 0px 15px 10px;
   padding: 0 0 5px 0;
   color: rgb(216, 211, 255);
   font-size: 16px;
@@ -42,8 +42,8 @@
 .postText-entering {
   position: relative;
   width: 90%;
-  padding: 8px;
-  margin-left: 0px;
+  padding: 10px 15px 30px 10px;
+  margin-left: 15px;
   border-radius: 0px 10px 10px 10px;
   background-color: #dee1ff;
   color: rgb(0, 0, 0, 0.8);
