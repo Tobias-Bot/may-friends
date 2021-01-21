@@ -33,6 +33,7 @@ class FindFriend extends React.Component {
     this.setModalForm = this.setModalForm.bind(this);
     this.likePost = this.likePost.bind(this);
     this.saveForm = this.saveForm.bind(this);
+    this.updatePosts = this.updatePosts.bind(this);
   }
 
   componentDidMount() {
@@ -71,7 +72,7 @@ class FindFriend extends React.Component {
               need_likes: 1,
               count: this.offset,
               //offset: this.currOffset,
-              sort: "desc",
+              sort: "asc",
               v: "5.126",
               access_token: token,
             },
@@ -82,18 +83,15 @@ class FindFriend extends React.Component {
 
             for (let i = 0; i < comms.length; i++) {
               let post = {};
+              let postData = JSON.parse(comms[i].text);
+
               post.id = comms[i].id;
-              post.text = comms[i].text;
+              post.text = postData.form.text;
 
-              // let index = profiles.findIndex(
-              //   (profile) => comms[i].from_id === profile.id
-              // );
-
-              // post.name = profiles[index].first_name;
-              // post.url = `https://vk.com/id${profiles[index].id}`;
-              // post.user_id = profiles[index].id;
-              // post.online = profiles[index].online;
-              // post.photo = profiles[index].photo_50;
+              post.name = postData.user.name;
+              post.url = postData.user.url;
+              post.user_id = postData.user.id;
+              post.photo = postData.user.photo;
 
               posts.unshift(post);
             }
@@ -123,10 +121,18 @@ class FindFriend extends React.Component {
 
   getPosts() {
     let response = this.state.posts.map((post, i) => {
-      return <Post key={i} data={post} index={i} />;
+      return <Post key={i} data={post} index={i} color={this.props.color} />;
     });
 
     return response;
+  }
+
+  updatePosts() {
+    //let posts = [];
+
+    this.setState({ posts: [] });
+
+    this.loadPosts();
   }
 
   saveForm() {
@@ -136,47 +142,60 @@ class FindFriend extends React.Component {
       ps: this.state.ps,
     };
 
-    console.log(formData);
-
     this.props.onSubmitForm(formData);
   }
 
   setModalForm() {
     let form = (
       <div className="postForm">
-        <input
+        {/* <input
           className="inputStr"
           placeholder="Укажи свой город"
           onChange={(e) =>
-            this.setState({ city: e.target.value }, this.saveForm())
+            this.setState({ city: e.target.value }, this.saveForm)
           }
-        />
+        /> */}
         <textarea
           className="inputText"
-          placeholder="Расскажи немного о себе"
-          onChange={this.saveForm}
+          placeholder="Текст"
+          onChange={(e) =>
+            this.setState({ text: e.target.value }, this.saveForm)
+          }
         ></textarea>
         <textarea
           className="inputText"
           placeholder="P.S."
-          onChange={this.saveForm}
+          onChange={(e) => this.setState({ ps: e.target.value }, this.saveForm)}
         ></textarea>
       </div>
     );
 
-    this.props.onSetForm(form);
+    let styles = {
+      color: this.props.color,
+    };
+
+    this.props.onSetForm(form, styles);
   }
 
   render() {
     let posts = this.getPosts();
+    let color = this.props.color;
 
     return (
       <div>
         {posts}
 
-        <div className="topicFooter">
+        <div className="topicFooter" style={{ borderColor: color }}>
           <div
             className="postBtn"
+            style={{ color: color, borderColor: color }}
+            onClick={this.updatePosts}
+          >
+            <i className="fas fa-redo-alt"></i>
+          </div>
+          <div
+            className="postBtn"
+            style={{ color: color, borderColor: color }}
             data-toggle="modal"
             data-target="#postModal"
             onClick={this.setModalForm}

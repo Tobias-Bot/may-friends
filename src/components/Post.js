@@ -16,6 +16,7 @@ class Post extends React.Component {
     this.getRandom = this.getRandom.bind(this);
     this.getSavedPosts = this.getSavedPosts.bind(this);
     this.likePost = this.likePost.bind(this);
+    this.sharePost = this.sharePost.bind(this);
   }
 
   componentDidMount() {
@@ -56,36 +57,6 @@ class Post extends React.Component {
     this.setState({ savedPosts: posts });
 
     localStorage.setItem("savedPosts", posts.join(","));
-
-    // bridge
-    //   .send("VKWebAppGetAuthToken", {
-    //     app_id: 7734940, //7706189,
-    //     scope: "wall",
-    //   })
-    //   .then((data) => {
-    let token =
-      "1cc15217534a491b2e5486ea6b31f92421c151f365a8e987272660177daa23538874e879e3cbf344f0415"; //data.access_token;
-    let user_id = this.props.data.user_id;
-    let comm_id = this.props.data.id;
-
-    bridge
-      .send("VKWebAppCallAPIMethod", {
-        method: "wall.createComment",
-        params: {
-          owner_id: "-140403026",
-          post_id: "673",
-          message: "hello",
-          from_group: "140403026",
-          v: "5.126",
-          access_token: token,
-        },
-      })
-      .then((r) => {
-        let likesCount = r.response;
-
-        console.log(likesCount);
-      });
-    //});
   }
 
   dislikePost(id) {
@@ -100,9 +71,15 @@ class Post extends React.Component {
     localStorage.setItem("savedPosts", posts.join(","));
   }
 
+  sharePost() {
+    let id = this.props.data.id;
+    bridge.send("VKWebAppShare", { link: "https://vk.com/app6909581#hello" });
+  }
+
   render() {
     let post = this.props.data;
     let index = this.props.index;
+    let postColor = this.props.color;
     let posts = localStorage.getItem("savedPosts");
     let liked = false;
 
@@ -112,7 +89,7 @@ class Post extends React.Component {
 
     return (
       <div>
-        <Transition in={this.state.show} timeout={200 + index * 200}>
+        <Transition in={this.state.show} timeout={100 + index * 150}>
           {(state) => {
             return (
               <div
@@ -125,24 +102,63 @@ class Post extends React.Component {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <img className="postPhoto" src={post.photo} alt="avatar" />
+                  <img
+                    className={"postPhoto" + "-" + state}
+                    src={post.photo}
+                    alt="avatar"
+                  />
                   <div className={"postHeader" + "-" + state}>{post.name}</div>
                 </a>
-                <div className={"postText" + "-" + state}>{post.text}</div>
                 <div
-                  className="postLikeBtn"
+                  className={"postText" + "-" + state}
+                  style={{ backgroundColor: postColor }}
+                >
+                  {post.text}
+                </div>
+                <a
+                  className="linkStyle"
+                  href={post.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <div
+                    className={"postLikeBtn" + "-" + state}
+                    style={{ backgroundColor: postColor }}
+                  >
+                    <i className="fas fa-comment"></i>
+                  </div>
+                </a>
+                {/* <div
+                  className={"shareBtn" + "-" + state}
+                  style={{ backgroundColor: postColor }}
                   onClick={(e) =>
                     !liked
                       ? this.likePost(post.id, e)
                       : this.dislikePost(post.id, e)
                   }
                 >
-                  <i className={!liked ? "far fa-heart" : "fas fa-heart"}></i>
+                  {!liked ? (
+                    <div>
+                      <i className="far fa-heart"></i>
+                    </div>
+                  ) : (
+                    <div>
+                      <i className="fas fa-heart"></i>
+                    </div>
+                  )}
                 </div>
+                <div
+                  className={"shareBtn" + "-" + state}
+                  style={{ backgroundColor: postColor }}
+                  onClick={this.sharePost}
+                >
+                  <i className="fas fa-share"></i>
+                </div>*/}
               </div>
             );
           }}
         </Transition>
+        <br />
       </div>
     );
   }

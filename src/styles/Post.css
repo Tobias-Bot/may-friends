@@ -6,17 +6,9 @@
   box-shadow: 0px 3px solid black;
 }
 
-.postView {
-  position: relative;
-  width: 100%;
-  padding: 10px;
-  border-radius: 10px;
-  box-shadow: 0px 3px solid black;
-}
-
 .postHeader-entering {
   position: relative;
-  display: inline-block;
+  display: block;
   margin: 20px 0px 15px 10px;
   padding: 0 0 5px 0;
   color: rgb(216, 211, 255);
@@ -44,57 +36,118 @@
   width: 90%;
   padding: 10px 15px 30px 10px;
   margin-left: 15px;
-  border-radius: 0px 10px 10px 10px;
+  border-radius: 0px 20px 20px 20px;
   background-color: #dee1ff;
   color: rgb(0, 0, 0, 0.8);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
   box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.6);
   opacity: 0;
 }
 
 .postText-entered {
-    position: relative;
-    width: 90%;
-    padding: 10px 15px 30px 10px;
-    margin-left: 15px;
-    border-radius: 0px 20px 20px 20px;
-    background-color: #dee1ff;
-    color: rgb(0, 0, 0, 0.8);
-    font-size: 15px;
-    font-weight: 500;
-    box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.6);
-    opacity: 1;
-    transition: 0.5s all;
-  }
+  position: relative;
+  width: 90%;
+  padding: 10px 15px 30px 10px;
+  margin-left: 15px;
+  border-radius: 0px 20px 20px 20px;
+  background-color: #dee1ff;
+  color: rgb(0, 0, 0, 0.8);
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.6);
+  opacity: 1;
+  transition: 0.3s all;
+}
 
-.postPhoto {
+.postPhoto-entering {
   position: relative;
   display: inline-block;
   width: 40px;
   height: 40px;
   border-radius: 100px;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+  opacity: 0;
 }
-.postPhoto:hover {
+.postPhoto-entered {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border-radius: 100px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+  opacity: 1;
+  transition: 0.3s all;
+}
+.postPhoto-entered:hover {
   cursor: pointer;
 }
 
-.postLikeBtn {
+.postLikeBtn-entering {
   position: absolute;
   bottom: -10px;
   right: 45px;
-  height: 50px;
-  width: 50px;
-  padding: 8px;
+  height: 60px;
+  width: 60px;
+  padding: 6px;
   font-size: 22px;
   color: rgba(0, 0, 0, 0.9);
   background-color: rgb(255, 195, 247);
   border-radius: 100px;
   text-align: center;
-  box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.7);
-  transition: 0.5s all;
+  opacity: 0;
 }
-.postLikeBtn:hover {
+.postLikeBtn-entered {
+  position: absolute;
+  bottom: -10px;
+  right: 45px;
+  height: 50px;
+  width: 50px;
+  padding: 7px;
+  font-size: 22px;
+  color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 100px;
+  text-align: center;
+  box-shadow: 2px 3px 20px rgba(0, 0, 0, 0.6);
+  opacity: 1;
+  transition: 0.2s all;
+}
+.postLikeBtn-entered:hover {
   cursor: pointer;
+}
+
+.shareBtn-entering {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  float: left;
+  left: 40px;
+  padding: 1px;
+  margin: 8px 5px 20px 5px;
+  font-size: 15px;
+  color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 100px;
+  text-align: center;
+  box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.8);
+  opacity: 0;
+}
+
+.shareBtn-entered {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  float: left;
+  left: 40px;
+  padding: 1px;
+  margin: 8px 5px 20px 5px;
+  font-size: 15px;
+  color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 100px;
+  text-align: center;
+  box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.8);
+  opacity: 1;
+  transition: 0.5s all;
 }
