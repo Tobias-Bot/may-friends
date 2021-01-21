@@ -27,6 +27,9 @@ class Main extends React.Component {
       },
 
       submitUserData: {},
+
+      load: false,
+      scroll: false,
     };
 
     this.token =
@@ -39,6 +42,9 @@ class Main extends React.Component {
     this.setModalForm = this.setModalForm.bind(this);
     this.saveForm = this.saveForm.bind(this);
     this.getUserData = this.getUserData.bind(this);
+    this.stopLoad = this.stopLoad.bind(this);
+    this.startLoad = this.startLoad.bind(this);
+    this.PostsLoader = this.PostsLoader.bind(this);
   }
 
   componentDidMount() {
@@ -63,8 +69,11 @@ class Main extends React.Component {
           height: "70px",
           paddingTop: "30px",
         },
+        headerLineBot: {
+          top: "70px",
+        },
         body: {
-          paddingTop: "20px",
+          top: "137px",
         },
       };
     } else {
@@ -117,8 +126,34 @@ class Main extends React.Component {
     });
   }
 
+  stopLoad() {
+    this.setState({ load: false });
+  }
+
+  startLoad() {
+    this.setState({ scroll: true });
+  }
+
+  PostsLoader() {
+    let content = document.getElementById("contentWindow");
+
+    let H = content.scrollHeight;
+    let currH = content.scrollTop;
+
+    this.currPercent = (100 * currH) / (H - 700);
+
+    if (this.currPercent <= 70) {
+      this.startLoad();
+    }
+
+    if (this.state.scroll) {
+      if (this.currPercent >= 70) {
+        this.setState({ load: true, scroll: false });
+      }
+    }
+  }
+
   render() {
-    // let posts = this.getTests();
     let styles = this.state.headerStyles;
     let form = this.state.modalForm;
 
@@ -203,19 +238,26 @@ class Main extends React.Component {
           <span className="titleApp">френдс</span>
         </div>
 
-        <div className="headerLineBot">{bar}</div>
+        <div className="headerLineBot" style={styles.headerLineBot}>
+          {bar}
+        </div>
 
-        <div className="Body" style={styles.body}>
+        <div
+          id="contentWindow"
+          className="Body"
+          style={styles.body}
+          onScroll={this.PostsLoader}
+        >
           <HashRouter>
             <Switch>
-              {/* <Route exact path="/">
-                {posts}
-              </Route> */}
               <Route exact path="/friend">
                 <FindFriend
                   color={"#7DC5D5"}
                   onSetForm={this.setModalForm}
                   onSubmitForm={this.saveForm}
+                  load={this.state.load}
+                  stopLoad={this.stopLoad}
+                  startLoad={this.startLoad}
                 />
               </Route>
               <Route exact path="/film">

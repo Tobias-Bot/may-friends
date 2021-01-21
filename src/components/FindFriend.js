@@ -22,16 +22,17 @@ class FindFriend extends React.Component {
       ps: "",
     };
 
-    this.offset = 20;
+    this.offset = 10;
     this.currOffset = 0;
 
     this.group_id = 140403026;
+    this.post_id = 673;
+    this.lastComm = 0;
 
     this.getPosts = this.getPosts.bind(this);
     this.loadPosts = this.loadPosts.bind(this);
     this.getRandom = this.getRandom.bind(this);
     this.setModalForm = this.setModalForm.bind(this);
-    this.likePost = this.likePost.bind(this);
     this.saveForm = this.saveForm.bind(this);
     this.updatePosts = this.updatePosts.bind(this);
   }
@@ -68,11 +69,10 @@ class FindFriend extends React.Component {
             method: "wall.getComments",
             params: {
               owner_id: "-" + this.group_id,
-              post_id: "673",
-              need_likes: 1,
+              post_id: this.post_id,
+              start_comment_id: this.lastComm,
               count: this.offset,
-              //offset: this.currOffset,
-              sort: "asc",
+              sort: "desc",
               v: "5.126",
               access_token: token,
             },
@@ -93,10 +93,20 @@ class FindFriend extends React.Component {
               post.user_id = postData.user.id;
               post.photo = postData.user.photo;
 
-              posts.unshift(post);
+              posts.push(post);
+
+              if (i === comms.length - 1) {
+                this.lastComm = comms[i].id - 1;
+              }
             }
 
-            this.setState({ posts: [...posts, ...this.state.posts] });
+            this.setState({
+              posts: [...this.state.posts, ...posts],
+              postsLoad: false,
+            });
+          })
+          .catch((e) => {
+            console.log("it's ok");
           });
       });
 
@@ -107,16 +117,6 @@ class FindFriend extends React.Component {
     let rand = min - 0.5 + Math.random() * (max - min + 1);
 
     return Math.round(rand);
-  }
-
-  likePost(id) {
-    let posts = this.state.savedPosts;
-
-    posts.unshift(id);
-
-    this.setState({ savedPosts: posts });
-
-    localStorage.setItem("savedPosts", posts.join(","));
   }
 
   getPosts() {
@@ -130,6 +130,7 @@ class FindFriend extends React.Component {
   updatePosts() {
     //let posts = [];
 
+    this.lastComm = 0;
     this.setState({ posts: [] });
 
     this.loadPosts();
