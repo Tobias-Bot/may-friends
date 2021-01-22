@@ -5,6 +5,11 @@ import { Route, HashRouter, Switch, NavLink } from "react-router-dom";
 // import Transition from "react-transition-group/Transition";
 
 import FindFriend from "./FindFriend";
+import WatchFilm from "./WatchFilm";
+import PlayGames from "./PlayGames";
+import TalkToMe from "./TalkToMe";
+import GoWalk from "./GoWalk";
+import Ask from "./Ask";
 
 import "../App.css";
 
@@ -31,6 +36,8 @@ class Main extends React.Component {
       load: false,
       scroll: false,
     };
+
+    this.topic_id = 0;
 
     this.token =
       "1cc15217534a491b2e5486ea6b31f92421c151f365a8e987272660177daa23538874e879e3cbf344f0415";
@@ -90,7 +97,8 @@ class Main extends React.Component {
     this.getUserData();
   }
 
-  saveForm(formData) {
+  saveForm(formData, topic_id) {
+    this.topic_id = topic_id;
     this.setState({ submitUserData: formData });
   }
 
@@ -117,7 +125,7 @@ class Main extends React.Component {
       method: "wall.createComment",
       params: {
         owner_id: "-" + this.group_id,
-        post_id: "673",
+        post_id: this.topic_id,
         message: JSON.stringify(mes),
         from_group: this.group_id,
         v: "5.126",
@@ -162,32 +170,32 @@ class Main extends React.Component {
         <div>
           <NavLink className="linkStyle" to="/friend">
             <div className="btnInfo" style={{ backgroundColor: "#7DC5D5" }}>
-              <i className="fas fa-icons"></i> ищу друга
+              <i className="fas fa-user-friends"></i> ищу друга
             </div>
           </NavLink>
           <NavLink className="linkStyle" to="/film">
             <div className="btnInfo" style={{ backgroundColor: "#A59BFF" }}>
-              <i className="fas fa-icons"></i> посмотрим фильм?
+              <i class="fas fa-video"></i> посмотрим фильм?
             </div>
           </NavLink>
           <NavLink className="linkStyle" to="/talk">
             <div className="btnInfo" style={{ backgroundColor: "#FFC1F9" }}>
-              <i className="fas fa-icons"></i> поговорите со мной
+              <i className="fas fa-comment-dots"></i> поговорите со мной
             </div>
           </NavLink>
           <NavLink className="linkStyle" to="/game">
             <div className="btnInfo" style={{ backgroundColor: "#FFEF85" }}>
-              <i className="fas fa-icons"></i> поиграем?
+              <i className="fas fa-gamepad"></i> поиграем?
             </div>
           </NavLink>
           <NavLink className="linkStyle" to="/walk">
             <div className="btnInfo" style={{ backgroundColor: "#8BD1FF" }}>
-              <i className="fas fa-icons"></i> идем гулять?
+              <i className="fas fa-walking"></i> идем гулять?
             </div>
           </NavLink>
           <NavLink className="linkStyle" to="/ask">
             <div className="btnInfo" style={{ backgroundColor: "#FFAA97" }}>
-              <i className="fas fa-icons"></i> хочу спросить
+              <i className="fas fa-question-circle"></i> хочу спросить
             </div>
           </NavLink>
         </div>
@@ -261,19 +269,54 @@ class Main extends React.Component {
                 />
               </Route>
               <Route exact path="/film">
-                FIMLS
+                <WatchFilm
+                  color={"#C1BEFF"}
+                  onSetForm={this.setModalForm}
+                  onSubmitForm={this.saveForm}
+                  load={this.state.load}
+                  stopLoad={this.stopLoad}
+                  startLoad={this.startLoad}
+                />
               </Route>
               <Route exact path="/game">
-                GAMES
+                <PlayGames
+                  color={"#FFF197"}
+                  onSetForm={this.setModalForm}
+                  onSubmitForm={this.saveForm}
+                  load={this.state.load}
+                  stopLoad={this.stopLoad}
+                  startLoad={this.startLoad}
+                />
               </Route>
               <Route exact path="/walk">
-                WALKS
+                <GoWalk
+                  color={"#9DD8FF"}
+                  onSetForm={this.setModalForm}
+                  onSubmitForm={this.saveForm}
+                  load={this.state.load}
+                  stopLoad={this.stopLoad}
+                  startLoad={this.startLoad}
+                />
               </Route>
               <Route exact path="/talk">
-                TALK
+                <TalkToMe
+                  color={"#FFCDFA"}
+                  onSetForm={this.setModalForm}
+                  onSubmitForm={this.saveForm}
+                  load={this.state.load}
+                  stopLoad={this.stopLoad}
+                  startLoad={this.startLoad}
+                />
               </Route>
               <Route exact path="/ask">
-                ASK
+                <Ask
+                  color={"#FFB4A3"}
+                  onSetForm={this.setModalForm}
+                  onSubmitForm={this.saveForm}
+                  load={this.state.load}
+                  stopLoad={this.stopLoad}
+                  startLoad={this.startLoad}
+                />
               </Route>
             </Switch>
           </HashRouter>

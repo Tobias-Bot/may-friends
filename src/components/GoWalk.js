@@ -7,7 +7,7 @@ import Post from "./Post";
 
 import "../App.css";
 
-class FindFriend extends React.Component {
+class GoWalk extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,13 +22,13 @@ class FindFriend extends React.Component {
       ps: "",
     };
 
-    this.info = `ищу друга`;
+    this.info = `найти того, с кем можно погулять`;
 
     this.offset = 20;
     this.currOffset = 0;
 
     this.group_id = 140403026;
-    this.post_id = 673;
+    this.post_id = 729;
     this.lastComm = 0;
 
     this.getPosts = this.getPosts.bind(this);
@@ -140,12 +140,11 @@ class FindFriend extends React.Component {
 
   saveForm() {
     let formData = {
-      city: this.state.city,
       text: this.state.text,
       ps: this.state.ps,
     };
 
-    this.props.onSubmitForm(formData);
+    this.props.onSubmitForm(formData, this.post_id);
   }
 
   setModalForm() {
@@ -213,4 +212,4 @@ class FindFriend extends React.Component {
   }
 }
 
-export default FindFriend;
+export default GoWalk;
