@@ -20,15 +20,17 @@ class FindFriend extends React.Component {
       city: "",
       text: "",
       ps: "",
+      whoIsText: "",
+      zz: "",
+      age: 0,
+      music: "",
     };
-
-    this.info = `ищу друга`;
 
     this.offset = 20;
     this.currOffset = 0;
 
     this.group_id = 140403026;
-    this.post_id = 673;
+    this.post_id = this.props.data.post_id;
     this.lastComm = 0;
 
     this.getPosts = this.getPosts.bind(this);
@@ -123,7 +125,9 @@ class FindFriend extends React.Component {
 
   getPosts() {
     let response = this.state.posts.map((post, i) => {
-      return <Post key={i} data={post} index={i} color={this.props.color} />;
+      return (
+        <Post key={i} data={post} index={i} color={this.props.data.color} />
+      );
     });
 
     return response;
@@ -140,41 +144,73 @@ class FindFriend extends React.Component {
 
   saveForm() {
     let formData = {
-      city: this.state.city,
       text: this.state.text,
       ps: this.state.ps,
+      city: this.state.city,
+      whoIsText: this.state.whoIsText,
+      zz: this.state.zz,
+      age: this.state.age,
+      music: this.state.music,
     };
 
-    this.props.onSubmitForm(formData);
+    this.props.onSubmitForm(formData, this.post_id);
   }
 
   setModalForm() {
     let form = (
       <div className="postForm">
-        {/* <input
-          className="inputStr"
-          placeholder="Укажи свой город"
-          onChange={(e) =>
-            this.setState({ city: e.target.value }, this.saveForm)
-          }
-        /> */}
         <textarea
           className="inputText"
-          placeholder="Текст"
+          placeholder="Расскажи о себе: интересы, хобби, сериалы, музыка (кратко)"
           onChange={(e) =>
             this.setState({ text: e.target.value }, this.saveForm)
           }
         ></textarea>
         <textarea
           className="inputText"
+          placeholder="Опиши, кого хочешь найти? (кратко)"
+          onChange={(e) =>
+            this.setState({ whoIsText: e.target.value }, this.saveForm)
+          }
+        ></textarea>
+        <input
+          className="inputStr"
           placeholder="P.S."
           onChange={(e) => this.setState({ ps: e.target.value }, this.saveForm)}
-        ></textarea>
+        />
+        <br />
+        <div className="inputTitle">Кое-что еще (необязательно)</div>
+        <input
+          className="inputStr"
+          placeholder="Укажи свой город"
+          onChange={(e) =>
+            this.setState({ city: e.target.value }, this.saveForm)
+          }
+        />
+        <input
+          className="inputStr"
+          placeholder="Знак зодиака"
+          onChange={(e) => this.setState({ zz: e.target.value }, this.saveForm)}
+        />
+        <input
+          className="inputStr"
+          placeholder="Возраст"
+          onChange={(e) =>
+            this.setState({ age: e.target.value }, this.saveForm)
+          }
+        />
+        <input
+          className="inputStr"
+          placeholder="Любимая песня"
+          onChange={(e) =>
+            this.setState({ music: e.target.value }, this.saveForm)
+          }
+        />
       </div>
     );
 
     let styles = {
-      color: this.props.color,
+      color: this.props.data.color,
     };
 
     this.props.onSetForm(form, styles);
@@ -182,11 +218,12 @@ class FindFriend extends React.Component {
 
   render() {
     let posts = this.getPosts();
-    let color = this.props.color;
+    let color = this.props.data.color;
+    let info = this.props.data.description;
 
     return (
       <div>
-        <div className="infoText">{this.info}</div>
+        <div className="infoText">{info}</div>
 
         {posts}
 

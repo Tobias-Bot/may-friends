@@ -17,18 +17,15 @@ class WatchFilm extends React.Component {
       show: false,
       postsLoad: true,
 
-      film: "",
       text: "",
       ps: "",
     };
-
-    this.info = `посмотреть с кем-нибудь фильм через сайт совместного просмотра`;
 
     this.offset = 20;
     this.currOffset = 0;
 
     this.group_id = 140403026;
-    this.post_id = 722;
+    this.post_id = this.props.data.post_id;
     this.lastComm = 0;
 
     this.getPosts = this.getPosts.bind(this);
@@ -123,7 +120,9 @@ class WatchFilm extends React.Component {
 
   getPosts() {
     let response = this.state.posts.map((post, i) => {
-      return <Post key={i} data={post} index={i} color={this.props.color} />;
+      return (
+        <Post key={i} data={post} index={i} color={this.props.data.color} />
+      );
     });
 
     return response;
@@ -140,24 +139,16 @@ class WatchFilm extends React.Component {
 
   saveForm() {
     let formData = {
-      film: this.state.film,
       text: this.state.text,
       ps: this.state.ps,
     };
 
-    this.props.onSubmitForm(formData, this.post_id);
+    this.props.onSubmitForm(formData);
   }
 
   setModalForm() {
     let form = (
       <div className="postForm">
-        {/* <input
-          className="inputStr"
-          placeholder="Укажи свой город"
-          onChange={(e) =>
-            this.setState({ city: e.target.value }, this.saveForm)
-          }
-        /> */}
         <textarea
           className="inputText"
           placeholder="Текст"
@@ -174,7 +165,7 @@ class WatchFilm extends React.Component {
     );
 
     let styles = {
-      color: this.props.color,
+      color: this.props.data.color,
     };
 
     this.props.onSetForm(form, styles);
@@ -182,11 +173,12 @@ class WatchFilm extends React.Component {
 
   render() {
     let posts = this.getPosts();
-    let color = this.props.color;
+    let color = this.props.data.color;
+    let info = this.props.data.description;
 
     return (
       <div>
-        <div className="infoText">{this.info}</div>
+        <div className="infoText">{info}</div>
 
         {posts}
 

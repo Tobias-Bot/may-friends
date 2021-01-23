@@ -4,10 +4,11 @@ import qs from "querystring";
 import { Route, HashRouter, Switch, NavLink } from "react-router-dom";
 // import Transition from "react-transition-group/Transition";
 
+import topics from "../data/topics";
 import FindFriend from "./FindFriend";
 import WatchFilm from "./WatchFilm";
-import PlayGames from "./PlayGames";
 import TalkToMe from "./TalkToMe";
+import PlayGames from "./PlayGames";
 import GoWalk from "./GoWalk";
 import Ask from "./Ask";
 
@@ -52,6 +53,7 @@ class Main extends React.Component {
     this.stopLoad = this.stopLoad.bind(this);
     this.startLoad = this.startLoad.bind(this);
     this.PostsLoader = this.PostsLoader.bind(this);
+    this.openMainApp = this.openMainApp.bind(this);
   }
 
   componentDidMount() {
@@ -86,6 +88,20 @@ class Main extends React.Component {
     } else {
       return {};
     }
+  }
+
+  getTopics() {
+    let response = topics.map((topic, i) => {
+      return (
+        <NavLink key={i} className="linkStyle" to={topic.url}>
+          <div className="btnInfo" style={{ backgroundColor: topic.color }}>
+            <i className={topic.icon}></i> {topic.title}
+          </div>
+        </NavLink>
+      );
+    });
+
+    return response;
   }
 
   setModalText(text) {
@@ -161,46 +177,16 @@ class Main extends React.Component {
     }
   }
 
+  openMainApp() {
+    bridge.send("VKWebAppOpenApp", { app_id: 7646928 });
+  }
+
   render() {
     let styles = this.state.headerStyles;
     let form = this.state.modalForm;
+    let tabs = this.getTopics();
 
-    let bar = (
-      <HashRouter>
-        <div>
-          <NavLink className="linkStyle" to="/friend">
-            <div className="btnInfo" style={{ backgroundColor: "#7DC5D5" }}>
-              <i className="fas fa-user-friends"></i> ищу друга
-            </div>
-          </NavLink>
-          <NavLink className="linkStyle" to="/film">
-            <div className="btnInfo" style={{ backgroundColor: "#A59BFF" }}>
-              <i class="fas fa-video"></i> посмотрим фильм?
-            </div>
-          </NavLink>
-          <NavLink className="linkStyle" to="/talk">
-            <div className="btnInfo" style={{ backgroundColor: "#FFC1F9" }}>
-              <i className="fas fa-comment-dots"></i> поговорите со мной
-            </div>
-          </NavLink>
-          <NavLink className="linkStyle" to="/game">
-            <div className="btnInfo" style={{ backgroundColor: "#FFEF85" }}>
-              <i className="fas fa-gamepad"></i> поиграем?
-            </div>
-          </NavLink>
-          <NavLink className="linkStyle" to="/walk">
-            <div className="btnInfo" style={{ backgroundColor: "#8BD1FF" }}>
-              <i className="fas fa-walking"></i> идем гулять?
-            </div>
-          </NavLink>
-          <NavLink className="linkStyle" to="/ask">
-            <div className="btnInfo" style={{ backgroundColor: "#FFAA97" }}>
-              <i className="fas fa-question-circle"></i> хочу спросить
-            </div>
-          </NavLink>
-        </div>
-      </HashRouter>
-    );
+    let bar = <HashRouter>{tabs}</HashRouter>;
 
     return (
       <div>
@@ -242,7 +228,9 @@ class Main extends React.Component {
         </div>
 
         <div className="Header" style={styles.header}>
-          <span className="titleMark">Мαú</span>{" "}
+          <span className="titleMark" onClick={this.openMainApp}>
+            Мαú
+          </span>{" "}
           <span className="titleApp">френдс</span>
         </div>
 
@@ -260,7 +248,7 @@ class Main extends React.Component {
             <Switch>
               <Route exact path="/friend">
                 <FindFriend
-                  color={"#7DC5D5"}
+                  data={topics[0]}
                   onSetForm={this.setModalForm}
                   onSubmitForm={this.saveForm}
                   load={this.state.load}
@@ -270,27 +258,7 @@ class Main extends React.Component {
               </Route>
               <Route exact path="/film">
                 <WatchFilm
-                  color={"#C1BEFF"}
-                  onSetForm={this.setModalForm}
-                  onSubmitForm={this.saveForm}
-                  load={this.state.load}
-                  stopLoad={this.stopLoad}
-                  startLoad={this.startLoad}
-                />
-              </Route>
-              <Route exact path="/game">
-                <PlayGames
-                  color={"#FFF197"}
-                  onSetForm={this.setModalForm}
-                  onSubmitForm={this.saveForm}
-                  load={this.state.load}
-                  stopLoad={this.stopLoad}
-                  startLoad={this.startLoad}
-                />
-              </Route>
-              <Route exact path="/walk">
-                <GoWalk
-                  color={"#9DD8FF"}
+                  data={topics[1]}
                   onSetForm={this.setModalForm}
                   onSubmitForm={this.saveForm}
                   load={this.state.load}
@@ -300,7 +268,27 @@ class Main extends React.Component {
               </Route>
               <Route exact path="/talk">
                 <TalkToMe
-                  color={"#FFCDFA"}
+                  data={topics[2]}
+                  onSetForm={this.setModalForm}
+                  onSubmitForm={this.saveForm}
+                  load={this.state.load}
+                  stopLoad={this.stopLoad}
+                  startLoad={this.startLoad}
+                />
+              </Route>
+              <Route exact path="/game">
+                <PlayGames
+                  data={topics[3]}
+                  onSetForm={this.setModalForm}
+                  onSubmitForm={this.saveForm}
+                  load={this.state.load}
+                  stopLoad={this.stopLoad}
+                  startLoad={this.startLoad}
+                />
+              </Route>
+              <Route exact path="/walk">
+                <GoWalk
+                  data={topics[4]}
                   onSetForm={this.setModalForm}
                   onSubmitForm={this.saveForm}
                   load={this.state.load}
@@ -310,7 +298,7 @@ class Main extends React.Component {
               </Route>
               <Route exact path="/ask">
                 <Ask
-                  color={"#FFB4A3"}
+                  data={topics[5]}
                   onSetForm={this.setModalForm}
                   onSubmitForm={this.saveForm}
                   load={this.state.load}
