@@ -11,8 +11,7 @@ class FindFriend extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      posts: [],
-      savedPosts: [],
+      posts: this.props.posts,
 
       show: false,
       postsLoad: true,
@@ -39,12 +38,14 @@ class FindFriend extends React.Component {
     this.setModalForm = this.setModalForm.bind(this);
     this.saveForm = this.saveForm.bind(this);
     this.updatePosts = this.updatePosts.bind(this);
+    this.shareTopic = this.shareTopic.bind(this);
   }
 
   componentDidMount() {
     this.setState({ show: true });
 
-    this.loadPosts();
+    this.updatePosts();
+    //this.loadPosts();
     //this.props.startLoad();
   }
 
@@ -90,7 +91,7 @@ class FindFriend extends React.Component {
               let postData = JSON.parse(comms[i].text);
 
               post.id = comms[i].id;
-              post.text = postData.form.text;
+              post.text = postData.form;
 
               post.name = postData.user.name;
               post.url = postData.user.url;
@@ -104,10 +105,15 @@ class FindFriend extends React.Component {
               }
             }
 
-            this.setState({
-              posts: [...this.state.posts, ...posts],
-              postsLoad: false,
-            });
+            this.setState(
+              {
+                posts: [...this.state.posts, ...posts],
+                postsLoad: false,
+              },
+              () => {
+                this.props.setPosts(this.state.posts);
+              }
+            );
           })
           .catch((e) => {
             console.log("it's ok");
@@ -124,7 +130,7 @@ class FindFriend extends React.Component {
   }
 
   getPosts() {
-    let response = this.state.posts.map((post, i) => {
+    let response = this.props.posts.map((post, i) => {
       return (
         <Post key={i} data={post} index={i} color={this.props.data.color} />
       );
@@ -137,23 +143,27 @@ class FindFriend extends React.Component {
     //let posts = [];
 
     this.lastComm = 0;
-    this.setState({ posts: [] });
+    this.setState({ posts: [] }, () => {
+      this.props.setPosts(this.state.posts);
+    });
 
     this.loadPosts();
   }
 
   saveForm() {
     let formData = {
-      text: this.state.text,
-      ps: this.state.ps,
-      city: this.state.city,
-      whoIsText: this.state.whoIsText,
-      zz: this.state.zz,
-      age: this.state.age,
-      music: this.state.music,
+      "О себе": this.state.text,
+      "Ищу тебя": this.state.whoIsText,
+      Ps: this.state.ps,
+      Город: this.state.city,
+      "Знак зодиака": this.state.zz,
+      Возраст: this.state.age,
+      "Любимая песня": this.state.music,
     };
 
-    this.props.onSubmitForm(formData, this.post_id);
+    let dirty = this.state.text.length > 0;
+
+    this.props.onSubmitForm(formData, this.post_id, dirty);
   }
 
   setModalForm() {
@@ -162,13 +172,15 @@ class FindFriend extends React.Component {
         <textarea
           className="inputText"
           placeholder="Расскажи о себе: интересы, хобби, сериалы, музыка (кратко)"
+          rows="5"
           onChange={(e) =>
             this.setState({ text: e.target.value }, this.saveForm)
           }
         ></textarea>
         <textarea
           className="inputText"
-          placeholder="Опиши, кого хочешь найти? (кратко)"
+          placeholder="Опиши, кого хочешь найти (кратко)"
+          rows="3"
           onChange={(e) =>
             this.setState({ whoIsText: e.target.value }, this.saveForm)
           }
@@ -216,14 +228,50 @@ class FindFriend extends React.Component {
     this.props.onSetForm(form, styles);
   }
 
+  shareTopic() {
+    bridge.send("VKWebAppShare", {
+      link: "https://vk.com/app7738603#" + this.props.data.url,
+    });
+  }
+
   render() {
     let posts = this.getPosts();
     let color = this.props.data.color;
     let info = this.props.data.description;
+    let isShow = this.state.postsLoad;
 
     return (
       <div>
         <div className="infoText">{info}</div>
+        <div
+          className="shareTopicBtn"
+          style={{ backgroundColor: color }}
+          onClick={this.shareTopic}
+        >
+          поделиться
+        </div>
+        <br />
+        {/* <div
+          className="shareTopicBtn"
+          style={{
+            backgroundColor: color,
+            border: "3px solid rgba(0, 0, 0, 0.5)",
+          }}
+          onClick={}
+        >
+          удалить мою запись
+        </div> */}
+
+        <div className="Loading" hidden={!isShow}>
+          <div
+            className="spinner-border"
+            style={{ color: color }}
+            role="status"
+          ></div>{" "}
+          <span className="LoadingText" style={{ color: color }}>
+            секундочку...
+          </span>
+        </div>
 
         {posts}
 

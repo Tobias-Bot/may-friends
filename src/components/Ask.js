@@ -11,7 +11,7 @@ class Ask extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      posts: [],
+      posts: this.props.posts,
       savedPosts: [],
 
       show: false,
@@ -34,12 +34,14 @@ class Ask extends React.Component {
     this.setModalForm = this.setModalForm.bind(this);
     this.saveForm = this.saveForm.bind(this);
     this.updatePosts = this.updatePosts.bind(this);
+    this.shareTopic = this.shareTopic.bind(this);
   }
 
   componentDidMount() {
     this.setState({ show: true });
 
-    this.loadPosts();
+    this.updatePosts();
+    //this.loadPosts();
     //this.props.startLoad();
   }
 
@@ -85,7 +87,7 @@ class Ask extends React.Component {
               let postData = JSON.parse(comms[i].text);
 
               post.id = comms[i].id;
-              post.text = postData.form.text;
+              post.text = postData.form;
 
               post.name = postData.user.name;
               post.url = postData.user.url;
@@ -99,10 +101,15 @@ class Ask extends React.Component {
               }
             }
 
-            this.setState({
-              posts: [...this.state.posts, ...posts],
-              postsLoad: false,
-            });
+            this.setState(
+              {
+                posts: [...this.state.posts, ...posts],
+                postsLoad: false,
+              },
+              () => {
+                this.props.setPosts(this.state.posts);
+              }
+            );
           })
           .catch((e) => {
             console.log("it's ok");
@@ -119,7 +126,7 @@ class Ask extends React.Component {
   }
 
   getPosts() {
-    let response = this.state.posts.map((post, i) => {
+    let response = this.props.posts.map((post, i) => {
       return (
         <Post key={i} data={post} index={i} color={this.props.data.color} />
       );
@@ -132,18 +139,22 @@ class Ask extends React.Component {
     //let posts = [];
 
     this.lastComm = 0;
-    this.setState({ posts: [] });
+    this.setState({ posts: [] }, () => {
+      this.props.setPosts(this.state.posts);
+    });
 
     this.loadPosts();
   }
 
   saveForm() {
     let formData = {
-      text: this.state.text,
-      ps: this.state.ps,
+      Вопрос: this.state.text,
+      Ps: this.state.ps,
     };
 
-    this.props.onSubmitForm(formData);
+    let dirty = this.state.text.length > 0;
+
+    this.props.onSubmitForm(formData, this.post_id, dirty);
   }
 
   setModalForm() {
@@ -151,7 +162,8 @@ class Ask extends React.Component {
       <div className="postForm">
         <textarea
           className="inputText"
-          placeholder="Текст"
+          placeholder="Что хочешь спросить?"
+          rows="5"
           onChange={(e) =>
             this.setState({ text: e.target.value }, this.saveForm)
           }
@@ -171,14 +183,39 @@ class Ask extends React.Component {
     this.props.onSetForm(form, styles);
   }
 
+  shareTopic() {
+    bridge.send("VKWebAppShare", {
+      link: "https://vk.com/app7738603#" + this.props.data.url,
+    });
+  }
+
   render() {
     let posts = this.getPosts();
     let color = this.props.data.color;
     let info = this.props.data.description;
+    let isShow = this.state.postsLoad;
 
     return (
       <div>
         <div className="infoText">{info}</div>
+        <div
+          className="shareTopicBtn"
+          style={{ backgroundColor: color }}
+          onClick={this.shareTopic}
+        >
+          поделиться
+        </div>
+
+        <div className="Loading" hidden={!isShow}>
+          <div
+            className="spinner-border"
+            style={{ color: color }}
+            role="status"
+          ></div>{" "}
+          <span className="LoadingText" style={{ color: color }}>
+            секундочку...
+          </span>
+        </div>
 
         {posts}
 

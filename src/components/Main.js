@@ -5,6 +5,7 @@ import { Route, HashRouter, Switch, NavLink } from "react-router-dom";
 // import Transition from "react-transition-group/Transition";
 
 import topics from "../data/topics";
+import InfoPage from "./InfoPage";
 import FindFriend from "./FindFriend";
 import WatchFilm from "./WatchFilm";
 import TalkToMe from "./TalkToMe";
@@ -31,8 +32,9 @@ class Main extends React.Component {
         photo: "",
         url: "",
       },
-
       submitUserData: {},
+
+      formValid: false,
 
       load: false,
       scroll: false,
@@ -113,9 +115,9 @@ class Main extends React.Component {
     this.getUserData();
   }
 
-  saveForm(formData, topic_id) {
+  saveForm(formData, topic_id, dirty) {
     this.topic_id = topic_id;
-    this.setState({ submitUserData: formData });
+    this.setState({ submitUserData: formData, formValid: dirty });
   }
 
   getUserData() {
@@ -137,17 +139,34 @@ class Main extends React.Component {
       user: this.state.submitUserForm,
     };
 
-    bridge.send("VKWebAppCallAPIMethod", {
-      method: "wall.createComment",
-      params: {
-        owner_id: "-" + this.group_id,
-        post_id: this.topic_id,
-        message: JSON.stringify(mes),
-        from_group: this.group_id,
-        v: "5.126",
-        access_token: this.token,
-      },
-    });
+    bridge
+      .send("VKWebAppCallAPIMethod", {
+        method: "wall.createComment",
+        params: {
+          owner_id: "-" + this.group_id,
+          post_id: this.topic_id,
+          message: JSON.stringify(mes),
+          from_group: this.group_id,
+          v: "5.126",
+          access_token: this.token,
+        },
+      })
+      .then((r) => {
+        let post = {};
+        let posts = this.state.posts;
+
+        post.id = r.response.comment_id;
+        post.text = mes.form;
+
+        post.name = mes.user.name;
+        post.url = mes.user.url;
+        post.user_id = mes.user.id;
+        post.photo = mes.user.photo;
+
+        posts.unshift(post);
+
+        this.setState({ posts, modalForm: <div></div> });
+      });
   }
 
   stopLoad() {
@@ -185,6 +204,7 @@ class Main extends React.Component {
     let styles = this.state.headerStyles;
     let form = this.state.modalForm;
     let tabs = this.getTopics();
+    let formValid = this.state.formValid;
 
     let bar = <HashRouter>{tabs}</HashRouter>;
 
@@ -218,6 +238,7 @@ class Main extends React.Component {
                 <div
                   className="submitBtn"
                   data-dismiss="modal"
+                  hidden={!formValid}
                   onClick={this.submitUserPost}
                 >
                   опубликовать
@@ -232,6 +253,13 @@ class Main extends React.Component {
             Мαú
           </span>{" "}
           <span className="titleApp">френдс</span>
+          <HashRouter>
+            <NavLink className="linkStyle" to="/">
+              <span className="headerBtn">
+                <i className="fas fa-info-circle"></i>
+              </span>
+            </NavLink>
+          </HashRouter>
         </div>
 
         <div className="headerLineBot" style={styles.headerLineBot}>
@@ -246,9 +274,14 @@ class Main extends React.Component {
         >
           <HashRouter>
             <Switch>
+              <Route exact path="/">
+                <InfoPage />
+              </Route>
               <Route exact path="/friend">
                 <FindFriend
                   data={topics[0]}
+                  posts={this.state.posts}
+                  setPosts={(posts) => this.setState({ posts })}
                   onSetForm={this.setModalForm}
                   onSubmitForm={this.saveForm}
                   load={this.state.load}
@@ -259,6 +292,8 @@ class Main extends React.Component {
               <Route exact path="/film">
                 <WatchFilm
                   data={topics[1]}
+                  posts={this.state.posts}
+                  setPosts={(posts) => this.setState({ posts })}
                   onSetForm={this.setModalForm}
                   onSubmitForm={this.saveForm}
                   load={this.state.load}
@@ -269,6 +304,8 @@ class Main extends React.Component {
               <Route exact path="/talk">
                 <TalkToMe
                   data={topics[2]}
+                  posts={this.state.posts}
+                  setPosts={(posts) => this.setState({ posts })}
                   onSetForm={this.setModalForm}
                   onSubmitForm={this.saveForm}
                   load={this.state.load}
@@ -279,6 +316,8 @@ class Main extends React.Component {
               <Route exact path="/game">
                 <PlayGames
                   data={topics[3]}
+                  posts={this.state.posts}
+                  setPosts={(posts) => this.setState({ posts })}
                   onSetForm={this.setModalForm}
                   onSubmitForm={this.saveForm}
                   load={this.state.load}
@@ -289,6 +328,8 @@ class Main extends React.Component {
               <Route exact path="/walk">
                 <GoWalk
                   data={topics[4]}
+                  posts={this.state.posts}
+                  setPosts={(posts) => this.setState({ posts })}
                   onSetForm={this.setModalForm}
                   onSubmitForm={this.saveForm}
                   load={this.state.load}
@@ -299,6 +340,8 @@ class Main extends React.Component {
               <Route exact path="/ask">
                 <Ask
                   data={topics[5]}
+                  posts={this.state.posts}
+                  setPosts={(posts) => this.setState({ posts })}
                   onSetForm={this.setModalForm}
                   onSubmitForm={this.saveForm}
                   load={this.state.load}

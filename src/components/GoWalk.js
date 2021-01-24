@@ -11,14 +11,16 @@ class GoWalk extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      posts: [],
+      posts: this.props.posts,
       savedPosts: [],
 
       show: false,
       postsLoad: true,
 
-      text: "",
+      city: "",
       ps: "",
+      age: "",
+      me: "",
     };
 
     this.offset = 20;
@@ -34,12 +36,14 @@ class GoWalk extends React.Component {
     this.setModalForm = this.setModalForm.bind(this);
     this.saveForm = this.saveForm.bind(this);
     this.updatePosts = this.updatePosts.bind(this);
+    this.shareTopic = this.shareTopic.bind(this);
   }
 
   componentDidMount() {
     this.setState({ show: true });
 
-    this.loadPosts();
+    this.updatePosts();
+    //this.loadPosts();
     //this.props.startLoad();
   }
 
@@ -85,7 +89,7 @@ class GoWalk extends React.Component {
               let postData = JSON.parse(comms[i].text);
 
               post.id = comms[i].id;
-              post.text = postData.form.text;
+              post.text = postData.form;
 
               post.name = postData.user.name;
               post.url = postData.user.url;
@@ -99,10 +103,15 @@ class GoWalk extends React.Component {
               }
             }
 
-            this.setState({
-              posts: [...this.state.posts, ...posts],
-              postsLoad: false,
-            });
+            this.setState(
+              {
+                posts: [...this.state.posts, ...posts],
+                postsLoad: false,
+              },
+              () => {
+                this.props.setPosts(this.state.posts);
+              }
+            );
           })
           .catch((e) => {
             console.log("it's ok");
@@ -119,7 +128,7 @@ class GoWalk extends React.Component {
   }
 
   getPosts() {
-    let response = this.state.posts.map((post, i) => {
+    let response = this.props.posts.map((post, i) => {
       return (
         <Post key={i} data={post} index={i} color={this.props.data.color} />
       );
@@ -132,34 +141,54 @@ class GoWalk extends React.Component {
     //let posts = [];
 
     this.lastComm = 0;
-    this.setState({ posts: [] });
+    this.setState({ posts: [] }, () => {
+      this.props.setPosts(this.state.posts);
+    });
 
     this.loadPosts();
   }
 
   saveForm() {
     let formData = {
-      text: this.state.text,
-      ps: this.state.ps,
+      Город: this.state.city,
+      Ps: this.state.ps,
+      Возраст: this.state.age,
+      "О себе": this.state.me,
     };
 
-    this.props.onSubmitForm(formData);
+    let dirty = this.state.city.length > 0;
+
+    this.props.onSubmitForm(formData, this.post_id, dirty);
   }
 
   setModalForm() {
     let form = (
       <div className="postForm">
-        <textarea
-          className="inputText"
-          placeholder="Текст"
+        <input
+          className="inputStr"
+          placeholder="Город"
           onChange={(e) =>
-            this.setState({ text: e.target.value }, this.saveForm)
+            this.setState({ city: e.target.value }, this.saveForm)
           }
-        ></textarea>
+        />
         <textarea
           className="inputText"
           placeholder="P.S."
           onChange={(e) => this.setState({ ps: e.target.value }, this.saveForm)}
+        ></textarea>
+        <div className="inputTitle">Также можно написать</div>
+        <input
+          className="inputStr"
+          placeholder="Возраст"
+          onChange={(e) =>
+            this.setState({ age: e.target.value }, this.saveForm)
+          }
+        />
+        <textarea
+          className="inputText"
+          placeholder="О себе"
+          rows="4"
+          onChange={(e) => this.setState({ me: e.target.value }, this.saveForm)}
         ></textarea>
       </div>
     );
@@ -171,14 +200,39 @@ class GoWalk extends React.Component {
     this.props.onSetForm(form, styles);
   }
 
+  shareTopic() {
+    bridge.send("VKWebAppShare", {
+      link: "https://vk.com/app7738603#" + this.props.data.url,
+    });
+  }
+
   render() {
     let posts = this.getPosts();
     let color = this.props.data.color;
     let info = this.props.data.description;
+    let isShow = this.state.postsLoad;
 
     return (
       <div>
         <div className="infoText">{info}</div>
+        <div
+          className="shareTopicBtn"
+          style={{ backgroundColor: color }}
+          onClick={this.shareTopic}
+        >
+          поделиться
+        </div>
+
+        <div className="Loading" hidden={!isShow}>
+          <div
+            className="spinner-border"
+            style={{ color: color }}
+            role="status"
+          ></div>{" "}
+          <span className="LoadingText" style={{ color: color }}>
+            секундочку...
+          </span>
+        </div>
 
         {posts}
 

@@ -17,6 +17,7 @@ class Post extends React.Component {
     this.getSavedPosts = this.getSavedPosts.bind(this);
     this.likePost = this.likePost.bind(this);
     this.sharePost = this.sharePost.bind(this);
+    this.getPostText = this.getPostText.bind(this);
   }
 
   componentDidMount() {
@@ -41,6 +42,17 @@ class Post extends React.Component {
     let rand = min - 0.5 + Math.random() * (max - min + 1);
 
     return Math.round(rand);
+  }
+
+  getPostText() {
+    let form = this.props.data.text;
+    let text = "";
+
+    for (let key in form) {
+      if (form[key].length) text += `<b>${key}</b>: ${form[key]}.<br/>`;
+    }
+
+    return text;
   }
 
   likePost(id) {
@@ -82,6 +94,7 @@ class Post extends React.Component {
     let postColor = this.props.color;
     let posts = localStorage.getItem("savedPosts");
     let liked = false;
+    let text = this.getPostText();
 
     if (posts) {
       liked = posts.split(",").includes(`${post.id}`);
@@ -112,9 +125,8 @@ class Post extends React.Component {
                 <div
                   className={"postText" + "-" + state}
                   style={{ backgroundColor: postColor }}
-                >
-                  {post.text}
-                </div>
+                  dangerouslySetInnerHTML={{ __html: text }}
+                ></div>
                 <a
                   className="linkStyle"
                   href={post.url}
