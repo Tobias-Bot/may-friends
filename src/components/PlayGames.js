@@ -60,7 +60,7 @@ class PlayGames extends React.Component {
   loadPosts() {
     bridge
       .send("VKWebAppGetAuthToken", {
-        app_id: 7706189,
+        app_id: 7738603,
         scope: "wall",
       })
       .then((data) => {
