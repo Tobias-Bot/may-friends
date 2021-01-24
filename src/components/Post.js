@@ -1,6 +1,4 @@
 import React from "react";
-import bridge from "@vkontakte/vk-bridge";
-// import { Route, HashRouter, Switch, NavLink } from "react-router-dom";
 import Transition from "react-transition-group/Transition";
 
 import "../styles/Post.css";
@@ -16,7 +14,6 @@ class Post extends React.Component {
     this.getRandom = this.getRandom.bind(this);
     this.getSavedPosts = this.getSavedPosts.bind(this);
     this.likePost = this.likePost.bind(this);
-    this.sharePost = this.sharePost.bind(this);
     this.getPostText = this.getPostText.bind(this);
   }
 
@@ -83,22 +80,11 @@ class Post extends React.Component {
     localStorage.setItem("savedPosts", posts.join(","));
   }
 
-  sharePost() {
-    let id = this.props.data.id;
-    bridge.send("VKWebAppShare", { link: "https://vk.com/app6909581#hello" });
-  }
-
   render() {
     let post = this.props.data;
     let index = this.props.index;
     let postColor = this.props.color;
-    let posts = localStorage.getItem("savedPosts");
-    let liked = false;
     let text = this.getPostText();
-
-    if (posts) {
-      liked = posts.split(",").includes(`${post.id}`);
-    }
 
     return (
       <div>
@@ -116,14 +102,14 @@ class Post extends React.Component {
                   rel="noopener noreferrer"
                 >
                   <img
-                    className={"postPhoto" + "-" + state}
+                    className={"postPhoto-" + state}
                     src={post.photo}
                     alt="avatar"
                   />
-                  <div className={"postHeader" + "-" + state}>{post.name}</div>
+                  <div className={"postHeader-" + state}>{post.name}</div>
                 </a>
                 <div
-                  className={"postText" + "-" + state}
+                  className={"postText-" + state}
                   style={{ backgroundColor: postColor }}
                   dangerouslySetInnerHTML={{ __html: text }}
                 ></div>
@@ -134,7 +120,7 @@ class Post extends React.Component {
                   rel="noopener noreferrer"
                 >
                   <div
-                    className={"postLikeBtn" + "-" + state}
+                    className={"postLikeBtn-" + state}
                     style={{ backgroundColor: postColor }}
                   >
                     <i className="fas fa-comment"></i>

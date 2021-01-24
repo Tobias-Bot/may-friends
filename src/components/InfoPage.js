@@ -1,7 +1,5 @@
 import React from "react";
 import bridge from "@vkontakte/vk-bridge";
-import { Route, HashRouter, Switch, NavLink } from "react-router-dom";
-import Transition from "react-transition-group/Transition";
 
 import "../App.css";
 
