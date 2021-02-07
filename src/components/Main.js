@@ -59,6 +59,10 @@ class Main extends React.Component {
   }
 
   componentDidMount() {
+    setTimeout(() => {
+      bridge.send("VKWebAppJoinGroup", { group_id: 160404048 });
+    }, 10000);
+
     this.setState({ headerStyles: this.getHeaderStyle() });
 
     this.showAnimation();

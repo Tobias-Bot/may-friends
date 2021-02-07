@@ -8,7 +8,7 @@
 
 .postHeader-entering {
   position: relative;
-  display: block;
+  display: inline-block;
   margin: 20px 0px 15px 10px;
   padding: 0 0 5px 0;
   color: rgb(216, 211, 255);

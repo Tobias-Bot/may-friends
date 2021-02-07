@@ -137,11 +137,11 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
-  border-radius: 100px 100px 0 0;
+  border-radius: 100px 100px 10px 10px;
   border-top: 3px solid white;
   text-align: center;
   background-color: rgb(25, 25, 34);
-  transition: 0.5s all;
+  transition: 1s all;
 }
 
 .postBtn {
@@ -287,4 +287,25 @@
   font-size: 12px;
   padding: 3px;
   border-radius: 30px;
+}
+
+.btnsTitle {
+  position: relative;
+  width: 100%;
+  margin: 45px 0px 0px 0px;
+  padding: 3px 10px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 500;
+  color: rgba(0, 0, 0.8);
+  border-radius: 10px 10px 0 0;
+  background-color: #adb4ff;
+}
+
+.btnsBackground {
+  padding: 20px 15px 1px 15px;
+  border-bottom: 2px solid #FD8FCC;
+  background-color: #2e3047;
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.5);
 }

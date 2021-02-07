@@ -31,40 +31,43 @@ class InfoPage extends React.Component {
       <div>
         <div className="infoText">{info}</div>
         <div className="infoText">{privacy}</div>
-        <div className="row mt-5 mb-2 pl-3 pr-3">
-          <div className="col">
-            <div className="icon" onClick={this.shareApp}>
-              <i className="fas fa-share-square"></i>
-              <span className="iconTitle">поделиться</span>
+        <div className="btnsTitle"></div>
+        <div className="btnsBackground">
+          <div className="row mb-4">
+            <div className="col">
+              <div className="icon" onClick={this.shareApp}>
+                <i className="fas fa-share-square"></i>
+                <span className="iconTitle">поделиться</span>
+              </div>
+            </div>
+            <div className="col">
+              <a
+                href="https://vk.com/warmay"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="linkStyle"
+              >
+                <div className="icon">
+                  <i className="fas fa-door-open"></i>
+                  <span className="iconTitle">сообщество</span>
+                </div>
+              </a>
             </div>
           </div>
-          <div className="col">
-            <a
-              href="https://vk.com/warmay"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="linkStyle"
-            >
-              <div className="icon">
-                <i className="fas fa-door-open"></i>
-                <span className="iconTitle">сообщество</span>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div className="row mt-4 mb-2 pl-3 pr-3">
-          <div className="col">
-            <a
-              href="https://vk.com/im?sel=-160404048"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="linkStyle"
-            >
-              <div className="icon">
-                <i className="fas fa-bug"></i>
-                <span className="iconTitle">сообщить об ошибке</span>
-              </div>
-            </a>
+          <div className="row mb-4">
+            <div className="col">
+              <a
+                href="https://vk.com/im?sel=-160404048"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="linkStyle"
+              >
+                <div className="icon">
+                  <i className="fas fa-bug"></i>
+                  <span className="iconTitle">сообщить об ошибке</span>
+                </div>
+              </a>
+            </div>
           </div>
         </div>
       </div>
