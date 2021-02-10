@@ -298,7 +298,7 @@ class Main extends React.Component {
           <HashRouter>
             <NavLink className="linkStyle" to="/">
               <div className="btnFooter">
-                <i className="fas fa-redo-alt"></i>
+                <i className="fas fa-search"></i>
               </div>
             </NavLink>
             <div

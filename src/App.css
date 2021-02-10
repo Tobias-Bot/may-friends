@@ -112,7 +112,7 @@
   position: fixed;
   width: 100%;
   top: 50px;
-  height: calc(100% - 115px);
+  height: calc(100% - 105px);
   overflow-x: hidden;
   overflow-y: scroll;
   background-color: rgb(31, 31, 51);
