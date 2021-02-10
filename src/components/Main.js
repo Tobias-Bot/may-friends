@@ -7,11 +7,6 @@ import { Route, HashRouter, Switch, NavLink } from "react-router-dom";
 import topics from "../data/topics";
 import InfoPage from "./InfoPage";
 import FindFriend from "./FindFriend";
-import WatchFilm from "./WatchFilm";
-import TalkToMe from "./TalkToMe";
-import PlayGames from "./PlayGames";
-import GoWalk from "./GoWalk";
-import Ask from "./Ask";
 
 import "../App.css";
 
@@ -207,10 +202,10 @@ class Main extends React.Component {
   render() {
     let styles = this.state.headerStyles;
     let form = this.state.modalForm;
-    let tabs = this.getTopics();
+    // let tabs = this.getTopics();
     let formValid = this.state.formValid;
 
-    let bar = <HashRouter>{tabs}</HashRouter>;
+    // let bar = <HashRouter>{tabs}</HashRouter>;
 
     return (
       <div>
@@ -257,18 +252,18 @@ class Main extends React.Component {
             Мαú
           </span>{" "}
           <span className="titleApp">френдс</span>
-          <HashRouter>
-            <NavLink className="linkStyle" to="/">
+          {/* <HashRouter>
+            <NavLink className="linkStyle" to="/info">
               <span className="headerBtn">
                 <i className="fas fa-info-circle"></i>
               </span>
             </NavLink>
-          </HashRouter>
+          </HashRouter> */}
         </div>
 
-        <div className="headerLineBot" style={styles.headerLineBot}>
+        {/* <div className="headerLineBot" style={styles.headerLineBot}>
           {bar}
-        </div>
+        </div> */}
 
         <div
           id="contentWindow"
@@ -278,72 +273,12 @@ class Main extends React.Component {
         >
           <HashRouter>
             <Switch>
-              <Route exact path="/">
+              <Route exact path="/info">
                 <InfoPage />
               </Route>
-              <Route exact path="/friend">
+              <Route exact path="/">
                 <FindFriend
                   data={topics[0]}
-                  posts={this.state.posts}
-                  setPosts={(posts) => this.setState({ posts })}
-                  onSetForm={this.setModalForm}
-                  onSubmitForm={this.saveForm}
-                  load={this.state.load}
-                  stopLoad={this.stopLoad}
-                  startLoad={this.startLoad}
-                />
-              </Route>
-              <Route exact path="/film">
-                <WatchFilm
-                  data={topics[1]}
-                  posts={this.state.posts}
-                  setPosts={(posts) => this.setState({ posts })}
-                  onSetForm={this.setModalForm}
-                  onSubmitForm={this.saveForm}
-                  load={this.state.load}
-                  stopLoad={this.stopLoad}
-                  startLoad={this.startLoad}
-                />
-              </Route>
-              <Route exact path="/talk">
-                <TalkToMe
-                  data={topics[2]}
-                  posts={this.state.posts}
-                  setPosts={(posts) => this.setState({ posts })}
-                  onSetForm={this.setModalForm}
-                  onSubmitForm={this.saveForm}
-                  load={this.state.load}
-                  stopLoad={this.stopLoad}
-                  startLoad={this.startLoad}
-                />
-              </Route>
-              <Route exact path="/game">
-                <PlayGames
-                  data={topics[3]}
-                  posts={this.state.posts}
-                  setPosts={(posts) => this.setState({ posts })}
-                  onSetForm={this.setModalForm}
-                  onSubmitForm={this.saveForm}
-                  load={this.state.load}
-                  stopLoad={this.stopLoad}
-                  startLoad={this.startLoad}
-                />
-              </Route>
-              <Route exact path="/walk">
-                <GoWalk
-                  data={topics[4]}
-                  posts={this.state.posts}
-                  setPosts={(posts) => this.setState({ posts })}
-                  onSetForm={this.setModalForm}
-                  onSubmitForm={this.saveForm}
-                  load={this.state.load}
-                  stopLoad={this.stopLoad}
-                  startLoad={this.startLoad}
-                />
-              </Route>
-              <Route exact path="/ask">
-                <Ask
-                  data={topics[5]}
                   posts={this.state.posts}
                   setPosts={(posts) => this.setState({ posts })}
                   onSetForm={this.setModalForm}
@@ -359,13 +294,27 @@ class Main extends React.Component {
             <div className="copyrightText">Май</div>
           </a>
         </div>
-        {/* <div className="footer">
-          <NavLink className="linkStyle" to="/search">
-            <div className="btnFooter">
-              <i className="fas fa-search"></i>
+        <div className="footer">
+          <HashRouter>
+            <NavLink className="linkStyle" to="/">
+              <div className="btnFooter">
+                <i className="fas fa-redo-alt"></i>
+              </div>
+            </NavLink>
+            <div
+              className="btnFooter"
+              data-toggle="modal"
+              data-target="#postModal"
+            >
+              <i className="fas fa-pencil-alt"></i>
             </div>
-          </NavLink>
-        </div> */}
+            <NavLink className="linkStyle" to="/info">
+              <div className="btnFooter">
+                <i className="fas fa-info-circle"></i>
+              </div>
+            </NavLink>
+          </HashRouter>
+        </div>
       </div>
     );
   }

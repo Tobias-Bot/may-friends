@@ -275,7 +275,7 @@ class FindFriend extends React.Component {
 
         {posts}
 
-        <div className="topicFooter" style={{ borderColor: color }}>
+        {/* <div className="topicFooter" style={{ borderColor: color }}>
           <div
             className="postBtn"
             style={{ color: color, borderColor: color }}
@@ -292,7 +292,7 @@ class FindFriend extends React.Component {
           >
             <i className="fas fa-pencil-alt"></i>
           </div>
-        </div>
+        </div> */}
       </div>
     );
   }
