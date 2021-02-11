@@ -2,7 +2,7 @@ import React from "react";
 import bridge from "@vkontakte/vk-bridge";
 import qs from "querystring";
 import { Route, HashRouter, Switch, NavLink } from "react-router-dom";
-// import Transition from "react-transition-group/Transition";
+import Transition from "react-transition-group/Transition";
 
 import topics from "../data/topics";
 import InfoPage from "./InfoPage";
@@ -16,7 +16,6 @@ class Main extends React.Component {
     this.state = {
       posts: [],
       headerStyles: {},
-      modalForm: <div></div>,
       modalStyles: {},
 
       show: false,
@@ -27,7 +26,10 @@ class Main extends React.Component {
         photo: "",
         url: "",
       },
+
       submitUserData: {},
+
+      currForm: {},
 
       formValid: false,
 
@@ -35,10 +37,13 @@ class Main extends React.Component {
       scroll: false,
     };
 
-    this.topic_id = 0;
+    this.topic_id = 798;
+    this.topicName = "";
+
+    this.closeRef = React.createRef();
 
     this.token =
-      "1cc15217534a491b2e5486ea6b31f92421c151f365a8e987272660177daa23538874e879e3cbf344f0415";
+      "f97761ee8a2f12188b1a52d0c7f149ddbeb68151e0dc71c91d945a04eac7f0d0aef3bb0cdbcfe5293ef47";
     this.group_id = 140403026;
 
     this.submitUserPost = this.submitUserPost.bind(this);
@@ -51,6 +56,7 @@ class Main extends React.Component {
     this.startLoad = this.startLoad.bind(this);
     this.PostsLoader = this.PostsLoader.bind(this);
     this.openMainApp = this.openMainApp.bind(this);
+    this.getTopicForm = this.getTopicForm.bind(this);
   }
 
   componentDidMount() {
@@ -59,12 +65,11 @@ class Main extends React.Component {
     }, 10000);
 
     this.setState({ headerStyles: this.getHeaderStyle() });
-
-    this.showAnimation();
   }
 
   showAnimation() {
-    this.setState({ show: true });
+    let show = this.state.show;
+    this.setState({ show: !show });
   }
 
   getHeaderStyle() {
@@ -91,14 +96,66 @@ class Main extends React.Component {
     }
   }
 
+  getTopicForm(form, topicName) {
+    let inputs = [];
+    let data = {};
+
+    inputs = form.map((input, i) => {
+      data[input.title] = "";
+
+      return (
+        <div key={i} className="postForm">
+          <div className="inputTitle">{input.title}</div>
+          {input.type === "textarea" ? (
+            <textarea
+              className="inputText"
+              placeholder={input.hint}
+              rows={input.rows}
+              onChange={(e) => this.saveForm(input.title, e)}
+            ></textarea>
+          ) : (
+            <input
+              className="inputStr"
+              placeholder={input.hint}
+              onChange={(e) => this.saveForm(input.title, e)}
+            />
+          )}
+        </div>
+      );
+    });
+
+    this.setState({ currForm: data });
+
+    this.topicName = topicName;
+
+    return <div>{inputs}</div>;
+  }
+
   getTopics() {
     let response = topics.map((topic, i) => {
       return (
-        <NavLink key={i} className="linkStyle" to={topic.url}>
-          <div className="btnInfo" style={{ backgroundColor: topic.color }}>
-            <i className={topic.icon}></i> {topic.title}
-          </div>
-        </NavLink>
+        <Transition key={i} in={this.state.show} timeout={100 + i * 100}>
+          {(state) => {
+            return (
+              <div
+                className={"btnInfo-" + state}
+                style={{ backgroundColor: topic.color }}
+                data-toggle="modal"
+                data-target="#postModal"
+                onClick={() =>
+                  this.setModalForm(
+                    this.getTopicForm(topic.form, topic.title),
+                    {
+                      color: topic.color,
+                    }
+                  )
+                }
+              >
+                <i className={topic.icon}></i> {topic.title}
+              </div>
+            );
+          }}
+        </Transition>
       );
     });
 
@@ -114,9 +171,14 @@ class Main extends React.Component {
     this.getUserData();
   }
 
-  saveForm(formData, topic_id, dirty) {
-    this.topic_id = topic_id;
-    this.setState({ submitUserData: formData, formValid: dirty });
+  saveForm(key, e) {
+    let formData = this.state.currForm;
+
+    formData[key] = e.target.value;
+
+    //let dirty = this.state.text.length > 0;
+
+    this.setState({ submitUserData: formData });
   }
 
   getUserData() {
@@ -136,6 +198,8 @@ class Main extends React.Component {
     let mes = {
       form: this.state.submitUserData,
       user: this.state.submitUserForm,
+      color: this.state.modalStyles.color,
+      topic: this.topicName,
     };
 
     bridge
@@ -161,10 +225,14 @@ class Main extends React.Component {
         post.url = mes.user.url;
         post.user_id = mes.user.id;
         post.photo = mes.user.photo;
+        post.color = mes.color;
+        post.topic = mes.topic;
 
         posts.unshift(post);
 
-        this.setState({ posts, modalForm: <div></div> });
+        this.setState({ posts }, () => {
+          this.closeRef.current.click();
+        });
       });
   }
 
@@ -202,8 +270,10 @@ class Main extends React.Component {
   render() {
     let styles = this.state.headerStyles;
     let form = this.state.modalForm;
-    // let tabs = this.getTopics();
+    let tabs = this.getTopics();
     let formValid = this.state.formValid;
+
+    let show = this.state.show;
 
     // let bar = <HashRouter>{tabs}</HashRouter>;
 
@@ -237,7 +307,7 @@ class Main extends React.Component {
                 <div
                   className="submitBtn"
                   data-dismiss="modal"
-                  hidden={!formValid}
+                  // hidden={!formValid}
                   onClick={this.submitUserPost}
                 >
                   опубликовать
@@ -265,6 +335,12 @@ class Main extends React.Component {
           {bar}
         </div> */}
 
+        <div className="collapse navbar-collapse" id="navbarNavDropdown">
+          <div className="infoTitle">выбери тематику</div>
+          <br />
+          {tabs}
+        </div>
+
         <div
           id="contentWindow"
           className="Body"
@@ -278,11 +354,9 @@ class Main extends React.Component {
               </Route>
               <Route exact path="/">
                 <FindFriend
-                  data={topics[0]}
+                  topic_id={this.topic_id}
                   posts={this.state.posts}
                   setPosts={(posts) => this.setState({ posts })}
-                  onSetForm={this.setModalForm}
-                  onSubmitForm={this.saveForm}
                   load={this.state.load}
                   stopLoad={this.stopLoad}
                   startLoad={this.startLoad}
@@ -296,23 +370,36 @@ class Main extends React.Component {
         </div>
         <div className="footer">
           <HashRouter>
-            <NavLink className="linkStyle" to="/">
-              <div className="btnFooter">
-                <i className="fas fa-search"></i>
-              </div>
-            </NavLink>
+            {!show ? (
+              <NavLink className="linkStyle" to="/">
+                <div className="btnFooter">
+                  <i className="fas fa-search"></i>
+                </div>
+              </NavLink>
+            ) : (
+              ""
+            )}
             <div
               className="btnFooter"
-              data-toggle="modal"
-              data-target="#postModal"
+              data-toggle="collapse"
+              data-target="#navbarNavDropdown"
+              onClick={this.showAnimation}
             >
-              <i className="fas fa-pencil-alt"></i>
+              {!show ? (
+                <i className="fas fa-pencil-alt"></i>
+              ) : (
+                <i className="fas fa-times" ref={this.closeRef}></i>
+              )}
             </div>
-            <NavLink className="linkStyle" to="/info">
-              <div className="btnFooter">
-                <i className="fas fa-info-circle"></i>
-              </div>
-            </NavLink>
+            {!show ? (
+              <NavLink className="linkStyle" to="/info">
+                <div className="btnFooter">
+                  <i className="fas fa-info-circle"></i>
+                </div>
+              </NavLink>
+            ) : (
+              ""
+            )}
           </HashRouter>
         </div>
       </div>

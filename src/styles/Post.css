@@ -1,7 +1,7 @@
 .postView {
   position: relative;
   width: 100%;
-  padding: 10px;
+  margin-bottom: 20px;
   border-radius: 10px;
   box-shadow: 0px 3px solid black;
 }
@@ -9,23 +9,23 @@
 .postHeader-entering {
   position: relative;
   display: inline-block;
-  margin: 20px 0px 15px 10px;
-  padding: 0 0 5px 0;
+  width: 100%;
+  margin: 20px 0px 10px 10px;
   color: rgb(216, 211, 255);
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
   opacity: 0;
 }
 .postHeader-entered {
   position: relative;
   display: inline-block;
-  margin: 20px 0px 15px 10px;
-  padding: 0 0 5px 0;
+  width: 100%;
+  margin: 20px 0px 10px 10px;
   color: rgb(216, 211, 255);
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
   opacity: 1;
-  transition: 0.5s all;
+  transition: 0.6s all;
 }
 .postHeader:hover {
   cursor: pointer;
@@ -33,8 +33,8 @@
 
 .postText-entering {
   position: relative;
-  width: 90%;
-  padding: 10px 15px 30px 10px;
+  width: 92%;
+  padding: 12px 15px;
   margin-left: 15px;
   border-radius: 0px 20px 20px 20px;
   background-color: #dee1ff;
@@ -47,8 +47,8 @@
 
 .postText-entered {
   position: relative;
-  width: 90%;
-  padding: 10px 15px 30px 10px;
+  width: 92%;
+  padding: 12px 15px;
   margin-left: 15px;
   border-radius: 0px 20px 20px 20px;
   background-color: #dee1ff;
@@ -72,8 +72,8 @@
 .postPhoto-entered {
   position: relative;
   display: inline-block;
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   border-radius: 100px;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
   opacity: 1;
@@ -86,7 +86,7 @@
 .postLikeBtn-entering {
   position: absolute;
   bottom: -15px;
-  right: 45px;
+  right: 30px;
   height: 60px;
   width: 60px;
   padding: 6px;
@@ -99,10 +99,10 @@
 }
 .postLikeBtn-entered {
   position: absolute;
-  bottom: -15px;
-  right: 45px;
-  height: 50px;
-  width: 50px;
+  bottom: -25px;
+  right: 30px;
+  height: 48px;
+  width: 48px;
   padding: 7px;
   font-size: 22px;
   color: rgba(0, 0, 0, 0.7);
@@ -117,35 +117,28 @@
   cursor: pointer;
 }
 
-.shareBtn-entering {
+.topicName-entering {
   position: relative;
-  display: inline-block;
-  width: 60px;
-  float: left;
-  left: 40px;
-  padding: 1px;
-  margin: 8px 5px 20px 5px;
-  font-size: 15px;
-  color: rgba(0, 0, 0, 0.7);
+  display: inline;
+  padding: 2px 7px 3px 7px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.9);
   background-color: rgba(0, 0, 0, 0.1);
-  border-radius: 100px;
+  border-radius: 10px;
   text-align: center;
   box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.8);
   opacity: 0;
 }
 
-.shareBtn-entered {
+.topicName-entered {
   position: relative;
-  display: inline-block;
-  width: 60px;
-  float: left;
-  left: 40px;
-  padding: 1px;
-  margin: 8px 5px 20px 5px;
-  font-size: 15px;
-  color: rgba(0, 0, 0, 0.7);
+  display: inline;
+  padding: 2px 7px 3px 7px;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.9);
   background-color: rgba(0, 0, 0, 0.1);
-  border-radius: 100px;
+  border-radius: 5px;
   text-align: center;
   box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.8);
   opacity: 1;

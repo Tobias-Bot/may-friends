@@ -16,7 +16,7 @@
 .titleMark {
   padding: 3px 8px 4px 8px;
   border-radius: 5px;
-  color:rgb(31, 31, 51);
+  color: rgb(31, 31, 51);
   font-size: 16px;
   background: linear-gradient(45deg, #a6acff, #ff9dd1);
 }
@@ -24,7 +24,21 @@
 @font-face {
   font-family: Caveat-SemiBold;
   src: url(styles/fonts/static/Caveat-SemiBold.ttf);
- }
+}
+
+.collapse {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: calc(100% - 100px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  top: 50px;
+  padding-top: 50px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.9);
+  transition: 0.8s all;
+}
 
 .titleApp {
   font-size: 22px;
@@ -55,22 +69,37 @@
   background-color: rgb(25, 25, 34);
 } */
 
-.btnInfo {
+.btnInfo-entering {
   position: relative;
   display: inline-block;
   height: 35px;
   text-align: center;
   font-size: 16px;
   font-weight: 500;
-  margin: 7px 6px 0px 6px;
+  margin: 0px;
   padding: 4px 12px 0px 12px;
   color: rgb(37, 37, 51);
   background-color: white;
   border-radius: 100px;
   box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.5);
-  transition: 0.2s all;
+  opacity: 0;
 }
-.btnInfo:hover {
+.btnInfo-entered {
+  position: relative;
+  display: inline-block;
+  height: 35px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 8px;
+  padding: 4px 12px 0px 12px;
+  color: rgb(37, 37, 51);
+  background-color: white;
+  border-radius: 100px;
+  box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.5);
+  transition: 0.5s all;
+}
+.btnInfo-entered:hover {
   cursor: pointer;
 }
 
@@ -128,7 +157,7 @@
   padding: 8px 0 0 0;
   border-radius: 10px 10px 0 0;
   border-top: 2px solid #ffade4;
-  background-color:rgb(37, 37, 51);
+  background-color: rgb(37, 37, 51);
   text-align: center;
 }
 
@@ -174,6 +203,9 @@
   border-radius: 100px;
   border: 2px solid white;
   box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.8);
+}
+.postBtn:hover {
+  cursor: pointer;
 }
 
 .inputText {
@@ -227,6 +259,9 @@
   border-radius: 10px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.8);
 }
+.submitBtn:hover {
+  cursor: pointer;
+}
 
 .infoText {
   position: relative;
@@ -253,6 +288,9 @@
   border-radius: 5px;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
   color: rgb(37, 37, 51);
+}
+.shareTopicBtn {
+  cursor: pointer;
 }
 
 .Loading {
@@ -321,7 +359,7 @@
 
 .btnsBackground {
   padding: 20px 15px 1px 15px;
-  border-bottom: 2px solid #FD8FCC;
+  border-bottom: 2px solid #fd8fcc;
   background-color: #2e3047;
   border-radius: 0 0 20px 20px;
   box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.5);
@@ -338,4 +376,16 @@
   font-weight: 500;
   color: #b9bfff;
   opacity: 0.6;
+}
+
+.infoTitle {
+  position: relative;
+  width: 100%;
+  padding: 0px 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+  color: #c8cdff;
 }

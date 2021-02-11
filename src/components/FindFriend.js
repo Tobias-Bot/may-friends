@@ -15,28 +15,18 @@ class FindFriend extends React.Component {
 
       show: false,
       postsLoad: true,
-
-      city: "",
-      text: "",
-      ps: "",
-      whoIsText: "",
-      zz: "",
-      age: 0,
-      music: "",
     };
 
-    this.offset = 20;
+    this.offset = 30;
     this.currOffset = 0;
 
     this.group_id = 140403026;
-    this.post_id = this.props.data.post_id;
+    this.post_id = this.props.topic_id;
     this.lastComm = 0;
 
     this.getPosts = this.getPosts.bind(this);
     this.loadPosts = this.loadPosts.bind(this);
     this.getRandom = this.getRandom.bind(this);
-    this.setModalForm = this.setModalForm.bind(this);
-    this.saveForm = this.saveForm.bind(this);
     this.updatePosts = this.updatePosts.bind(this);
     this.shareTopic = this.shareTopic.bind(this);
   }
@@ -45,8 +35,6 @@ class FindFriend extends React.Component {
     this.setState({ show: true });
 
     this.updatePosts();
-    //this.loadPosts();
-    //this.props.startLoad();
   }
 
   componentWillUnmount() {
@@ -97,6 +85,8 @@ class FindFriend extends React.Component {
               post.url = postData.user.url;
               post.user_id = postData.user.id;
               post.photo = postData.user.photo;
+              post.color = postData.color;
+              post.topic = postData.topic;
 
               posts.push(post);
 
@@ -132,7 +122,7 @@ class FindFriend extends React.Component {
   getPosts() {
     let response = this.props.posts.map((post, i) => {
       return (
-        <Post key={i} data={post} index={i} color={this.props.data.color} />
+        <Post key={i} data={post} index={i} />
       );
     });
 
@@ -150,84 +140,6 @@ class FindFriend extends React.Component {
     this.loadPosts();
   }
 
-  saveForm() {
-    let formData = {
-      "О себе": this.state.text,
-      "Ищу тебя": this.state.whoIsText,
-      Ps: this.state.ps,
-      Город: this.state.city,
-      "Знак зодиака": this.state.zz,
-      Возраст: this.state.age,
-      "Любимая песня": this.state.music,
-    };
-
-    let dirty = this.state.text.length > 0;
-
-    this.props.onSubmitForm(formData, this.post_id, dirty);
-  }
-
-  setModalForm() {
-    let form = (
-      <div className="postForm">
-        <textarea
-          className="inputText"
-          placeholder="Расскажи о себе: интересы, хобби, сериалы, музыка (кратко)"
-          rows="5"
-          onChange={(e) =>
-            this.setState({ text: e.target.value }, this.saveForm)
-          }
-        ></textarea>
-        <textarea
-          className="inputText"
-          placeholder="Опиши, кого хочешь найти (кратко)"
-          rows="3"
-          onChange={(e) =>
-            this.setState({ whoIsText: e.target.value }, this.saveForm)
-          }
-        ></textarea>
-        <input
-          className="inputStr"
-          placeholder="P.S."
-          onChange={(e) => this.setState({ ps: e.target.value }, this.saveForm)}
-        />
-        <br />
-        <div className="inputTitle">Кое-что еще (необязательно)</div>
-        <input
-          className="inputStr"
-          placeholder="Укажи свой город"
-          onChange={(e) =>
-            this.setState({ city: e.target.value }, this.saveForm)
-          }
-        />
-        <input
-          className="inputStr"
-          placeholder="Знак зодиака"
-          onChange={(e) => this.setState({ zz: e.target.value }, this.saveForm)}
-        />
-        <input
-          className="inputStr"
-          placeholder="Возраст"
-          onChange={(e) =>
-            this.setState({ age: e.target.value }, this.saveForm)
-          }
-        />
-        <input
-          className="inputStr"
-          placeholder="Любимая песня"
-          onChange={(e) =>
-            this.setState({ music: e.target.value }, this.saveForm)
-          }
-        />
-      </div>
-    );
-
-    let styles = {
-      color: this.props.data.color,
-    };
-
-    this.props.onSetForm(form, styles);
-  }
-
   shareTopic() {
     bridge.send("VKWebAppShare", {
       link: "https://vk.com/app7738603#" + this.props.data.url,
@@ -236,63 +148,31 @@ class FindFriend extends React.Component {
 
   render() {
     let posts = this.getPosts();
-    let color = this.props.data.color;
-    let info = this.props.data.description;
     let isShow = this.state.postsLoad;
 
     return (
       <div>
-        <div className="infoText">{info}</div>
+        {/* <div className="infoText">{info}</div>
         <div
           className="shareTopicBtn"
           style={{ backgroundColor: color }}
           onClick={this.shareTopic}
         >
           поделиться
-        </div>
-        <br />
-        {/* <div
-          className="shareTopicBtn"
-          style={{
-            backgroundColor: color,
-            border: "3px solid rgba(0, 0, 0, 0.5)",
-          }}
-          onClick={}
-        >
-          удалить мою запись
         </div> */}
+        <br />
 
         <div className="Loading" hidden={!isShow}>
           <div
             className="spinner-border"
-            style={{ color: color }}
             role="status"
           ></div>{" "}
-          <span className="LoadingText" style={{ color: color }}>
+          <span className="LoadingText">
             секундочку...
           </span>
         </div>
 
         {posts}
-
-        {/* <div className="topicFooter" style={{ borderColor: color }}>
-          <div
-            className="postBtn"
-            style={{ color: color, borderColor: color }}
-            onClick={this.updatePosts}
-          >
-            <i className="fas fa-redo-alt"></i>
-          </div>
-          <div
-            className="postBtn"
-            style={{ color: color, borderColor: color }}
-            data-toggle="modal"
-            data-target="#postModal"
-            onClick={this.setModalForm}
-          >
-            <i className="fas fa-pencil-alt"></i>
-          </div>
-        </div> */}
       </div>
     );
   }

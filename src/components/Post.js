@@ -13,7 +13,7 @@ class Post extends React.Component {
 
     this.getRandom = this.getRandom.bind(this);
     this.getSavedPosts = this.getSavedPosts.bind(this);
-    this.likePost = this.likePost.bind(this);
+    //this.likePost = this.likePost.bind(this);
     this.getPostText = this.getPostText.bind(this);
   }
 
@@ -46,44 +46,44 @@ class Post extends React.Component {
     let text = "";
 
     for (let key in form) {
-      if (form[key].length) text += `<b>${key}</b>: ${form[key]}.<br/>`;
+      if (form[key].length) text += `<b>${!key ? "P.S." : key}</b>: ${form[key]}.<br/><br/>`;
     }
 
     return text;
   }
 
-  likePost(id) {
-    let posts = [];
+  // likePost(id) {
+  //   let posts = [];
 
-    let str = localStorage.getItem("savedPosts");
+  //   let str = localStorage.getItem("savedPosts");
 
-    if (str) {
-      posts = [...posts, ...str.split(",")];
-    }
+  //   if (str) {
+  //     posts = [...posts, ...str.split(",")];
+  //   }
 
-    posts.unshift(`${id}`);
+  //   posts.unshift(`${id}`);
 
-    this.setState({ savedPosts: posts });
+  //   this.setState({ savedPosts: posts });
 
-    localStorage.setItem("savedPosts", posts.join(","));
-  }
+  //   localStorage.setItem("savedPosts", posts.join(","));
+  // }
 
-  dislikePost(id) {
-    let posts = localStorage.getItem("savedPosts").split(",");
+  // dislikePost(id) {
+  //   let posts = localStorage.getItem("savedPosts").split(",");
 
-    let index = posts.findIndex((post_id) => post_id === `${id}`);
+  //   let index = posts.findIndex((post_id) => post_id === `${id}`);
 
-    posts.splice(index, 1);
+  //   posts.splice(index, 1);
 
-    this.setState({ savedPosts: posts });
+  //   this.setState({ savedPosts: posts });
 
-    localStorage.setItem("savedPosts", posts.join(","));
-  }
+  //   localStorage.setItem("savedPosts", posts.join(","));
+  // }
 
   render() {
     let post = this.props.data;
     let index = this.props.index;
-    let postColor = this.props.color;
+    let postColor = post.color;
     let text = this.getPostText();
 
     return (
@@ -101,12 +101,27 @@ class Post extends React.Component {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <img
-                    className={"postPhoto-" + state}
-                    src={post.photo}
-                    alt="avatar"
-                  />
-                  <div className={"postHeader-" + state}>{post.name}</div>
+                  <div className={"postHeader-" + state}>
+                    <div className="row">
+                      <div className="col">
+                        <img
+                          className={"postPhoto-" + state}
+                          src={post.photo}
+                          alt="avatar"
+                        />
+                      </div>
+                      <div className="col-10">
+                        {post.name}
+                        <br />
+                        <div
+                          className={"topicName-" + state}
+                          style={{ backgroundColor: post.color }}
+                        >
+                          {post.topic}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </a>
                 <div
                   className={"postText-" + state}

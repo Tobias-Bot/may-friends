@@ -2,51 +2,141 @@ const topics = [
   {
     title: "ищу друга",
     color: "#7DC5D5",
-    url: "friend",
     description: "ищу друга",
     icon: "fas fa-user-friends",
-    post_id: 673,
+    form: [
+      {
+        type: "textarea",
+        title: "О себе",
+        hint: "Интересы, хобби, сериалы, музыка (кратко)",
+        rows: 5,
+      },
+      {
+        type: "textarea",
+        title: "Кого хочу найти",
+        hint: "Описание",
+        rows: 4,
+      },
+      {
+        type: "input",
+        title: "Город",
+        hint: "(необязательное поле)",
+      },
+      {
+        type: "input",
+        title: "Знак зодиака",
+        hint: "(необязательное поле)",
+      },
+      {
+        type: "input",
+        title: "Возраст",
+        hint: "(необязательное поле)",
+      },
+      {
+        type: "input",
+        title: "Любимая песня",
+        hint: "(необязательное поле)",
+      },
+    ],
   },
   {
     title: "посмотрим фильм?",
     color: "#C1BEFF",
-    url: "film",
     description:
       "посмотреть с кем-нибудь фильм через сайт совместного просмотра",
     icon: "fas fa-video",
-    post_id: 722,
+    form: [
+      {
+        type: "input",
+        title: "Название фильма",
+        hint: "Что хотел бы посмотреть?",
+      },
+      {
+        type: "textarea",
+        title: "",
+        hint: "P.S.",
+        rows: 3,
+      },
+    ],
   },
   {
-    title: "поговорите со мной",
+    title: "поболтаем?",
     color: "#FFCDFA",
-    url: "talk",
     description: "поговорить о том, что тебя волнует",
     icon: "fas fa-comment-dots",
-    post_id: 723,
+    form: [
+      {
+        type: "textarea",
+        title: "Тема",
+        hint: "О чем хочешь поговорить?",
+        rows: 4,
+      },
+      {
+        type: "input",
+        title: "",
+        hint: "P.S.",
+      },
+    ],
   },
   {
     title: "поиграем?",
     color: "#FFF197",
-    url: "game",
     description: "поиграть с кем-нибудь онлайн",
     icon: "fas fa-gamepad",
-    post_id: 727,
+    form: [
+      {
+        type: "input",
+        title: "Название игры",
+        hint: "Во что хочешь поиграть?",
+      },
+      {
+        type: "textarea",
+        title: "",
+        hint: "P.S.",
+        rows: 3,
+      },
+    ],
   },
   {
     title: "идем гулять?",
     color: "#9DD8FF",
-    url: "walk",
     description: "найти того, с кем можно погулять",
     icon: "fas fa-walking",
-    post_id: 729,
+    form: [
+      {
+        type: "input",
+        title: "Город",
+        hint: "Где хочешь погулять?",
+      },
+      {
+        type: "textarea",
+        title: "О себе",
+        hint: "Расскажи немного о себе",
+      },
+      {
+        type: "input",
+        title: "Возраст",
+        hint: "Сколько тебе лет?",
+      },
+    ],
   },
   {
     title: "хочу спросить",
     color: "#FFB4A3",
-    url: "ask",
     description: "задать вопрос или попросить совет",
     icon: "fas fa-question-circle",
-    post_id: 730,
+    form: [
+      {
+        type: "textarea",
+        title: "Вопрос",
+        hint: "О чем хочешь спросить?",
+      },
+      {
+        type: "input",
+        title: "",
+        hint: "P.S.",
+      },
+    ],
   },
 ];
 
