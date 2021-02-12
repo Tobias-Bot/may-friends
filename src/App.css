@@ -103,6 +103,20 @@
   cursor: pointer;
 }
 
+.btnInfo {
+  position: relative;
+  display: inline-block;
+  height: 30px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 3px 10px 0px 10px;
+  color: rgb(37, 37, 51);
+  background-color: white;
+  border-radius: 100px;
+  box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.5);
+}
+
 .linkStyle {
   color: rgba(0, 0, 0, 0.9);
 }
@@ -166,16 +180,31 @@
   display: inline;
   margin: 0 28px;
   text-align: center;
-  font-size: 22px;
-  border-radius: 15px;
+  font-size: 23px;
   overflow: hidden;
   color: #b4b9ff;
-  text-align: center;
   transition: 0.1s all;
 }
 .btnFooter:hover {
   cursor: pointer;
   color: #ffa4f3;
+  outline: none;
+}
+
+.btnFooterMain {
+  position: relative;
+  display: inline-block;
+  margin: 0 28px;
+  text-align: center;
+  border-radius: 5px;
+  padding: 0px 12px;
+  font-size: 18px;
+  overflow: hidden;
+  color: rgba(0, 0, 0, 0.8);
+  background-color: #ffc8f8;
+}
+.btnFooterMain:hover {
+  cursor: pointer;
   outline: none;
 }
 
@@ -285,6 +314,7 @@
   padding: 1px 8px;
   font-size: 14px;
   font-weight: 500;
+  background-color: #b9bfff;
   border-radius: 5px;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
   color: rgb(37, 37, 51);

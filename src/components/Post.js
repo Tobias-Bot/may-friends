@@ -46,7 +46,8 @@ class Post extends React.Component {
     let text = "";
 
     for (let key in form) {
-      if (form[key].length) text += `<b>${!key ? "P.S." : key}</b>: ${form[key]}.<br/><br/>`;
+      if (form[key].length)
+        text += `<b>${!key ? "P.S." : key}</b>: ${form[key]}<br/><br/>`;
     }
 
     return text;
@@ -95,34 +96,33 @@ class Post extends React.Component {
                 className="postView"
                 //   style={{ backgroundColor: post.color }}
               >
-                <a
-                  className="linkStyle"
-                  href={post.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <div className={"postHeader-" + state}>
-                    <div className="row">
-                      <div className="col">
-                        <img
-                          className={"postPhoto-" + state}
-                          src={post.photo}
-                          alt="avatar"
-                        />
-                      </div>
-                      <div className="col-10">
-                        {post.name}
-                        <br />
-                        <div
-                          className={"topicName-" + state}
-                          style={{ backgroundColor: post.color }}
-                        >
-                          {post.topic}
-                        </div>
+                <div className={"postHeader-" + state}>
+                  <div className="row">
+                    <a
+                      className="linkStyle"
+                      href={post.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img
+                        className={"postPhoto-" + state}
+                        src={post.photo}
+                        alt="avatar"
+                      />
+                    </a>
+                    <div className="col">
+                      {post.name}
+                      <br />
+                      <div
+                        className={"topicName-" + state}
+                        style={{ backgroundColor: post.color }}
+                      >
+                        {post.topic}
                       </div>
                     </div>
                   </div>
-                </a>
+                </div>
+
                 <div
                   className={"postText-" + state}
                   style={{ backgroundColor: postColor }}
@@ -159,14 +159,14 @@ class Post extends React.Component {
                       <i className="fas fa-heart"></i>
                     </div>
                   )}
-                </div>
-                <div
-                  className={"shareBtn" + "-" + state}
+                </div>*/}
+                {/* <div
+                  className={"shareBtn-" + state}
                   style={{ backgroundColor: postColor }}
                   onClick={this.sharePost}
                 >
                   <i className="fas fa-share"></i>
-                </div>*/}
+                </div> */}
               </div>
             );
           }}

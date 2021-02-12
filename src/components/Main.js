@@ -17,6 +17,7 @@ class Main extends React.Component {
       posts: [],
       headerStyles: {},
       modalStyles: {},
+      modalForm: "",
 
       show: false,
 
@@ -88,7 +89,12 @@ class Main extends React.Component {
           top: "70px",
         },
         body: {
-          top: "137px",
+          top: "70px",
+          height: "calc(100% - 125px)",
+        },
+        collapse: {
+          height: "calc(100% - 120px)",
+          top: "70px",
         },
       };
     } else {
@@ -134,7 +140,7 @@ class Main extends React.Component {
   getTopics() {
     let response = topics.map((topic, i) => {
       return (
-        <Transition key={i} in={this.state.show} timeout={100 + i * 100}>
+        <Transition key={i} in={this.state.show} timeout={100 + i * 150}>
           {(state) => {
             return (
               <div
@@ -215,6 +221,9 @@ class Main extends React.Component {
         },
       })
       .then((r) => {
+        this.setState({ submitUserData: {}, currForm: {}, modalForm: "" });
+        this.topicName = "";
+
         let post = {};
         let posts = this.state.posts;
 
@@ -335,7 +344,11 @@ class Main extends React.Component {
           {bar}
         </div> */}
 
-        <div className="collapse navbar-collapse" id="navbarNavDropdown">
+        <div
+          className="collapse navbar-collapse"
+          style={styles.collapse}
+          id="navbarNavDropdown"
+        >
           <div className="infoTitle">выбери тематику</div>
           <br />
           {tabs}
@@ -349,10 +362,10 @@ class Main extends React.Component {
         >
           <HashRouter>
             <Switch>
-              <Route exact path="/info">
+              <Route exact path="/">
                 <InfoPage />
               </Route>
-              <Route exact path="/">
+              <Route exact path="/search">
                 <FindFriend
                   topic_id={this.topic_id}
                   posts={this.state.posts}
@@ -371,7 +384,7 @@ class Main extends React.Component {
         <div className="footer">
           <HashRouter>
             {!show ? (
-              <NavLink className="linkStyle" to="/">
+              <NavLink className="linkStyle" to="/search">
                 <div className="btnFooter">
                   <i className="fas fa-search"></i>
                 </div>
@@ -380,10 +393,18 @@ class Main extends React.Component {
               ""
             )}
             <div
-              className="btnFooter"
+              className="btnFooterMain"
               data-toggle="collapse"
               data-target="#navbarNavDropdown"
-              onClick={this.showAnimation}
+              onClick={() => {
+                this.showAnimation();
+                this.setState({
+                  submitUserData: {},
+                  currForm: {},
+                  modalForm: "",
+                });
+                this.topicName = "";
+              }}
             >
               {!show ? (
                 <i className="fas fa-pencil-alt"></i>
@@ -392,7 +413,7 @@ class Main extends React.Component {
               )}
             </div>
             {!show ? (
-              <NavLink className="linkStyle" to="/info">
+              <NavLink className="linkStyle" to="/">
                 <div className="btnFooter">
                   <i className="fas fa-info-circle"></i>
                 </div>

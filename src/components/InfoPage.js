@@ -2,17 +2,21 @@ import React from "react";
 import bridge from "@vkontakte/vk-bridge";
 
 import "../App.css";
+import topics from "../data/topics";
+import { NavLink } from "react-router-dom";
 
 class InfoPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      info: `Май-френдс — приложение для знакомств и общения.`,
+      infoMain: `Май-френдс — приложение для знакомств и общения.`,
       privacy: `Опубликованные записи не видят твои друзья или подписчики.
       Записи можно просматривать только через это приложение.`,
+      info: `Посты удаляются автоматически.`,
     };
 
     this.shareApp = this.shareApp.bind(this);
+    this.getTopicsInfo = this.getTopicsInfo.bind(this);
   }
 
   componentDidMount() {}
@@ -23,53 +27,58 @@ class InfoPage extends React.Component {
     });
   }
 
+  getTopicsInfo() {
+    let response = [];
+
+    response = topics.map((t) => {
+      return (
+        <div key={t.title} style={{ textAlign: "center" }}>
+          <div className="btnInfo" style={{ backgroundColor: t.color }}>
+            <i className={t.icon}></i> {t.title}
+          </div>
+          <div className="infoText">{t.description}</div>
+          <hr />
+        </div>
+      );
+    });
+
+    return response;
+  }
+
   render() {
-    let info = this.state.info;
+    let infoMain = this.state.infoMain;
     let privacy = this.state.privacy;
+    let info = this.state.info;
+
+    let topics = this.getTopicsInfo();
 
     return (
       <div>
-        <div className="infoText">{info}</div>
+        <div className="infoText">{infoMain}</div>
         <div className="infoText">{privacy}</div>
-        <div className="btnsTitle"></div>
+        <div className="infoText">{info}</div>
+        <div className="btnsTitle">приложение</div>
         <div className="btnsBackground">
           <div className="row mb-4">
+            <div className="col">
+              <NavLink className="linkStyle" to="search">
+                <div className="icon">
+                  <i className="fas fa-icons"></i>
+                  <span className="iconTitle">публикации</span>
+                </div>
+              </NavLink>
+            </div>
             <div className="col">
               <div className="icon" onClick={this.shareApp}>
                 <i className="fas fa-share-square"></i>
                 <span className="iconTitle">поделиться</span>
               </div>
             </div>
-            <div className="col">
-              <a
-                href="https://vk.com/warmay"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="linkStyle"
-              >
-                <div className="icon">
-                  <i className="fas fa-door-open"></i>
-                  <span className="iconTitle">сообщество</span>
-                </div>
-              </a>
-            </div>
-          </div>
-          <div className="row mb-4">
-            <div className="col">
-              <a
-                href="https://vk.com/im?sel=-160404048"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="linkStyle"
-              >
-                <div className="icon">
-                  <i className="fas fa-bug"></i>
-                  <span className="iconTitle">сообщить об ошибке</span>
-                </div>
-              </a>
-            </div>
           </div>
         </div>
+
+        <div className="btnsTitle">тематики записей</div>
+        <div className="btnsBackground">{topics}</div>
       </div>
     );
   }

@@ -15,6 +15,7 @@ class FindFriend extends React.Component {
 
       show: false,
       postsLoad: true,
+      justUploaded: false,
     };
 
     this.offset = 30;
@@ -35,6 +36,10 @@ class FindFriend extends React.Component {
     this.setState({ show: true });
 
     this.updatePosts();
+
+    // setInterval(() => {
+    //   this.updatePosts();
+    // }, 300000);
   }
 
   componentWillUnmount() {
@@ -121,23 +126,23 @@ class FindFriend extends React.Component {
 
   getPosts() {
     let response = this.props.posts.map((post, i) => {
-      return (
-        <Post key={i} data={post} index={i} />
-      );
+      return <Post key={i} data={post} index={i} />;
     });
 
     return response;
   }
 
   updatePosts() {
-    //let posts = [];
-
     this.lastComm = 0;
-    this.setState({ posts: [] }, () => {
+    this.setState({ posts: [], postsLoad: true, justUploaded: true }, () => {
       this.props.setPosts(this.state.posts);
     });
 
     this.loadPosts();
+
+    setTimeout(() => {
+      this.setState({ justUploaded: false });
+    }, 60000);
   }
 
   shareTopic() {
@@ -149,27 +154,24 @@ class FindFriend extends React.Component {
   render() {
     let posts = this.getPosts();
     let isShow = this.state.postsLoad;
+    let justUploaded = this.state.justUploaded;
 
     return (
       <div>
-        {/* <div className="infoText">{info}</div>
+        <div className="infoText">лента</div>
         <div
           className="shareTopicBtn"
-          style={{ backgroundColor: color }}
-          onClick={this.shareTopic}
+          style={justUploaded ? { opacity: "0.5" } : {}}
+          onClick={() => {
+            if (!justUploaded) this.updatePosts();
+          }}
         >
-          поделиться
-        </div> */}
-        <br />
+          обновить
+        </div>
 
         <div className="Loading" hidden={!isShow}>
-          <div
-            className="spinner-border"
-            role="status"
-          ></div>{" "}
-          <span className="LoadingText">
-            секундочку...
-          </span>
+          <div className="spinner-border" role="status"></div>{" "}
+          <span className="LoadingText">секундочку...</span>
         </div>
 
         {posts}
