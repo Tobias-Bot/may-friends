@@ -12,6 +12,7 @@ class InfoPage extends React.Component {
       infoMain: `Май-френдс — приложение для знакомств и общения.`,
       privacy: `Опубликованные записи не видят твои друзья или подписчики.
       Записи можно просматривать только через это приложение.`,
+      you: `Знакомься, общайся, ищи свою родственную душу!`,
       info: `Посты удаляются автоматически.`,
     };
 
@@ -48,6 +49,7 @@ class InfoPage extends React.Component {
   render() {
     let infoMain = this.state.infoMain;
     let privacy = this.state.privacy;
+    let you = this.state.you;
     let info = this.state.info;
 
     let topics = this.getTopicsInfo();
@@ -56,6 +58,7 @@ class InfoPage extends React.Component {
       <div>
         <div className="infoText">{infoMain}</div>
         <div className="infoText">{privacy}</div>
+        <div className="infoText">{you}</div>
         <div className="infoText">{info}</div>
         <div className="btnsTitle">приложение</div>
         <div className="btnsBackground">
