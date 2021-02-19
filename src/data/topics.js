@@ -252,31 +252,25 @@ const topics = [
       },
     ],
   },
-  // {
-  //   title: "ищу для проекта",
-  //   color: "#6BAFF8",
-  //   description: "Заниматься саморазвитием вместе",
-  //   icon: "fas fa-apple-alt",
-  //   form: [
-  //     {
-  //       type: "textarea",
-  //       title: "Чем хотел бы заниматься",
-  //       hint: "Например, выработать привычку читать книги или бегать по утрам",
-  //       rows: 3,
-  //     },
-  //     {
-  //       type: "textarea",
-  //       title: "О себе",
-  //       hint: "Расскажи немного о себе",
-  //       rows: 4,
-  //     },
-  //     {
-  //       type: "input",
-  //       title: "",
-  //       hint: "P.S.",
-  //     },
-  //   ],
-  // },
+  {
+    title: "бумажные письма",
+    color: "#F3EDED",
+    description: "Найти друга по переписке, писать друг другу письма от руки",
+    icon: "fas fa-envelope",
+    form: [
+      {
+        type: "textarea",
+        title: "О себе",
+        hint: "Расскажи немного о себе",
+        rows: 4,
+      },
+      {
+        type: "input",
+        title: "",
+        hint: "P.S.",
+      },
+    ],
+  },
 ];
 
 export default topics;
