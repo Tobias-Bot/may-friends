@@ -255,7 +255,7 @@ const topics = [
   {
     title: "бумажные письма",
     color: "#F3EDED",
-    description: "Найти друга по переписке, писать друг другу письма от руки",
+    description: "Найти друга по переписке, писать друг другу бумажные письма от руки",
     icon: "fas fa-envelope",
     form: [
       {
@@ -263,6 +263,12 @@ const topics = [
         title: "О себе",
         hint: "Расскажи немного о себе",
         rows: 4,
+      },
+      {
+        type: "textarea",
+        title: "Адрес",
+        hint: "Рекомендуем указать адрес в лс",
+        rows: 2,
       },
       {
         type: "input",

@@ -18,7 +18,7 @@ class FindFriend extends React.Component {
       justUploaded: false,
     };
 
-    this.offset = 30;
+    this.offset = 10;
     this.currOffset = 0;
 
     this.group_id = 140403026;

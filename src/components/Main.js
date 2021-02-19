@@ -261,12 +261,12 @@ class Main extends React.Component {
 
     this.currPercent = (100 * currH) / (H - 700);
 
-    if (this.currPercent <= 70) {
+    if (this.currPercent <= 60) {
       this.startLoad();
     }
 
     if (this.state.scroll) {
-      if (this.currPercent >= 70) {
+      if (this.currPercent >= 60) {
         this.setState({ load: true, scroll: false });
       }
     }
@@ -386,7 +386,7 @@ class Main extends React.Component {
             {!show ? (
               <NavLink className="linkStyle" to="/search">
                 <div className="btnFooter">
-                  <i className="fas fa-search"></i>
+                  <i className="fas fa-icons"></i>
                 </div>
               </NavLink>
             ) : (
