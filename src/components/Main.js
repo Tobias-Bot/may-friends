@@ -261,12 +261,12 @@ class Main extends React.Component {
 
     this.currPercent = (100 * currH) / (H - 700);
 
-    if (this.currPercent <= 60) {
+    if (this.currPercent <= 70) {
       this.startLoad();
     }
 
     if (this.state.scroll) {
-      if (this.currPercent >= 60) {
+      if (this.currPercent >= 70) {
         this.setState({ load: true, scroll: false });
       }
     }
@@ -369,6 +369,7 @@ class Main extends React.Component {
                 <FindFriend
                   topic_id={this.topic_id}
                   posts={this.state.posts}
+                  topics={tabs}
                   setPosts={(posts) => this.setState({ posts })}
                   load={this.state.load}
                   stopLoad={this.stopLoad}

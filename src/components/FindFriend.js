@@ -3,6 +3,7 @@ import bridge from "@vkontakte/vk-bridge";
 // import { Route, HashRouter, Switch, NavLink } from "react-router-dom";
 // import Transition from "react-transition-group/Transition";
 
+import topics from "../data/topics";
 import Post from "./Post";
 
 import "../App.css";
@@ -12,13 +13,14 @@ class FindFriend extends React.Component {
     super(props);
     this.state = {
       posts: this.props.posts,
+      checkedTopics: [],
 
       show: false,
       postsLoad: true,
       justUploaded: false,
     };
 
-    this.offset = 10;
+    this.offset = 30;
     this.currOffset = 0;
 
     this.group_id = 140403026;
@@ -27,9 +29,12 @@ class FindFriend extends React.Component {
 
     this.getPosts = this.getPosts.bind(this);
     this.loadPosts = this.loadPosts.bind(this);
-    this.getRandom = this.getRandom.bind(this);
     this.updatePosts = this.updatePosts.bind(this);
     this.shareTopic = this.shareTopic.bind(this);
+    this.getTopics = this.getTopics.bind(this);
+    this.checkTopic = this.checkTopic.bind(this);
+    this.uncheckTopic = this.uncheckTopic.bind(this);
+    this.uncheckAllTopics = this.uncheckAllTopics.bind(this);
   }
 
   componentDidMount() {
@@ -53,7 +58,61 @@ class FindFriend extends React.Component {
     }
   }
 
+  getTopics() {
+    let checkedTopics = this.state.checkedTopics;
+
+    let response = topics.map((topic, i) => {
+      let t = checkedTopics.includes(topic.title);
+
+      return (
+        <div
+          key={topic.title}
+          className={"btnInfo"}
+          style={
+            t
+              ? {
+                  backgroundColor: topic.color,
+                }
+              : { backgroundColor: "rgba(37, 37, 51)", color: "#b9bfff" }
+          }
+          onClick={() =>
+            t ? this.uncheckTopic(topic.title) : this.checkTopic(topic.title)
+          }
+        >
+          <i className={topic.icon}></i> {topic.title}
+        </div>
+      );
+    });
+
+    return response;
+  }
+
+  checkTopic(topic) {
+    let checked = this.state.checkedTopics;
+
+    checked.unshift(topic);
+
+    this.setState({ checkedTopics: checked });
+  }
+
+  uncheckTopic(topic) {
+    let checked = this.state.checkedTopics;
+
+    checked.splice(
+      checked.findIndex((title) => title === topic),
+      1
+    );
+
+    this.setState({ checkedTopics: checked });
+  }
+
+  uncheckAllTopics() {
+    this.setState({ checkedTopics: [] });
+  }
+
   loadPosts() {
+    this.setState({ postsLoad: true });
+
     bridge
       .send("VKWebAppGetAuthToken", {
         app_id: 7738603,
@@ -79,54 +138,63 @@ class FindFriend extends React.Component {
             let comms = r.response.items;
             let posts = [];
 
-            for (let i = 0; i < comms.length; i++) {
-              let post = {};
-              let postData = JSON.parse(comms[i].text);
+            if (comms.length) {
+              for (let i = 0; i < comms.length; i++) {
+                let postData = JSON.parse(comms[i].text);
 
-              post.id = comms[i].id;
-              post.text = postData.form;
+                let post = {};
 
-              post.name = postData.user.name;
-              post.url = postData.user.url;
-              post.user_id = postData.user.id;
-              post.photo = postData.user.photo;
-              post.color = postData.color;
-              post.topic = postData.topic;
+                post.id = comms[i].id;
+                post.date = comms[i].date;
+                post.text = postData.form;
 
-              posts.push(post);
+                post.name = postData.user.name;
+                post.url = postData.user.url;
+                post.user_id = postData.user.id;
+                post.photo = postData.user.photo;
+                post.color = postData.color;
+                post.topic = postData.topic;
 
-              if (i === comms.length - 1) {
-                this.lastComm = comms[i].id - 1;
+                posts.push(post);
+
+                if (i === comms.length - 1) {
+                  this.lastComm = comms[i].id - 1;
+                }
               }
+
+              this.setState(
+                {
+                  posts: [...this.state.posts, ...posts],
+                  postsLoad: false,
+                },
+                () => {
+                  this.props.setPosts(this.state.posts);
+                }
+              );
             }
-
-            this.setState(
-              {
-                posts: [...this.state.posts, ...posts],
-                postsLoad: false,
-              },
-              () => {
-                this.props.setPosts(this.state.posts);
-              }
-            );
           })
           .catch((e) => {
             console.log("it's ok");
+            this.setState({ postsLoad: false });
           });
       });
 
     this.currOffset += this.offset;
   }
 
-  getRandom(min, max) {
-    let rand = min - 0.5 + Math.random() * (max - min + 1);
-
-    return Math.round(rand);
-  }
-
   getPosts() {
+    let filter = this.state.checkedTopics;
+
     let response = this.props.posts.map((post, i) => {
-      return <Post key={i} data={post} index={i} />;
+      return (
+        <div key={post.topic + i}>
+          {!filter.length || filter.includes(post.topic) ? (
+            <Post data={post} index={i} />
+          ) : (
+            <div></div>
+          )}
+        </div>
+      );
     });
 
     return response;
@@ -155,10 +223,13 @@ class FindFriend extends React.Component {
     let posts = this.getPosts();
     let isShow = this.state.postsLoad;
     let justUploaded = this.state.justUploaded;
+    let checkedTopics = this.state.checkedTopics;
+    let bar = this.getTopics();
 
     return (
       <div>
-        <div className="infoText">лента</div>
+        <div className="headerLineBot">{bar}</div>
+        <br />
         <div
           className="shareTopicBtn"
           style={justUploaded ? { opacity: "0.5" } : {}}
@@ -166,15 +237,34 @@ class FindFriend extends React.Component {
             if (!justUploaded) this.updatePosts();
           }}
         >
-          обновить
+          <i className="fas fa-redo-alt"></i>
         </div>
+        <br />
+        <div
+          className="shareTopicBtn"
+          hidden={!checkedTopics.length}
+          onClick={this.uncheckAllTopics}
+        >
+          показать все
+        </div>
+        <hr />
+
+        {posts}
 
         <div className="Loading" hidden={!isShow}>
           <div className="spinner-border" role="status"></div>{" "}
           <span className="LoadingText">секундочку...</span>
         </div>
 
-        {posts}
+        <br />
+        {/* <div
+          className="shareTopicBtn"
+          hidden={posts.length < this.offset}
+          onClick={() => bridge.send("VKWebAppScroll", { top: 1, speed: 600 })}
+        >
+          ↑ наверх ↑
+        </div> */}
+        <hr />
       </div>
     );
   }

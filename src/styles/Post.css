@@ -85,12 +85,12 @@
 
 .postLikeBtn-entering {
   position: absolute;
-  bottom: -15px;
+  bottom: -30px;
   right: 30px;
-  height: 60px;
-  width: 60px;
-  padding: 6px;
-  font-size: 22px;
+  height: 65px;
+  width: 65px;
+  padding: 8px;
+  font-size: 24px;
   color: rgba(0, 0, 0, 0.9);
   background-color: rgb(255, 195, 247);
   border-radius: 100px;
@@ -99,12 +99,12 @@
 }
 .postLikeBtn-entered {
   position: absolute;
-  bottom: -25px;
+  bottom: -30px;
   right: 30px;
-  height: 48px;
-  width: 48px;
-  padding: 7px;
-  font-size: 22px;
+  height: 55px;
+  width: 55px;
+  padding: 8px;
+  font-size: 24px;
   color: rgba(0, 0, 0, 0.7);
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 100px;

@@ -87,15 +87,24 @@ class Post extends React.Component {
     let postColor = post.color;
     let text = this.getPostText();
 
+    let todayTime = new Date();
+    let todayDate = todayTime.toLocaleString("ru", {
+      day: "numeric",
+      weekday: "long",
+    });
+
+    let time = new Date(post.date * 1000);
+    let date = time.toLocaleString("ru", {
+      day: "numeric",
+      weekday: "long",
+    });
+
     return (
       <div>
-        <Transition in={this.state.show} timeout={100 + index * 150}>
+        <Transition in={this.state.show} timeout={100 + index * 5}>
           {(state) => {
             return (
-              <div
-                className="postView"
-                //   style={{ backgroundColor: post.color }}
-              >
+              <div className="postView">
                 <div className={"postHeader-" + state}>
                   <div className="row">
                     <a
@@ -119,6 +128,17 @@ class Post extends React.Component {
                       >
                         {post.topic}
                       </div>
+                    </div>
+                    <div
+                      className="col"
+                      style={{
+                        opacity: "0.5",
+                        fontSize: "14px",
+                        marginTop: "5px",
+                      }}
+                    >
+                      <i className="fas fa-calendar-week"></i>
+                      {todayDate === date ? " сегодня" : ` ${date}`}
                     </div>
                   </div>
                 </div>
