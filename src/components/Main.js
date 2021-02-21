@@ -61,6 +61,8 @@ class Main extends React.Component {
   }
 
   componentDidMount() {
+    this.getUserData();
+
     setTimeout(() => {
       bridge.send("VKWebAppJoinGroup", { group_id: 160404048 });
     }, 10000);
@@ -174,7 +176,7 @@ class Main extends React.Component {
 
   setModalForm(form, style) {
     this.setState({ modalForm: form, modalStyles: style });
-    this.getUserData();
+    // this.getUserData();
   }
 
   saveForm(key, e) {
@@ -367,6 +369,7 @@ class Main extends React.Component {
               </Route>
               <Route exact path="/search">
                 <FindFriend
+                  user={this.state.submitUserForm}
                   topic_id={this.topic_id}
                   posts={this.state.posts}
                   topics={tabs}

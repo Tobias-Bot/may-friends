@@ -116,6 +116,9 @@
   border-radius: 100px;
   box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.5);
 }
+.btnInfo:hover {
+  cursor: pointer;
+}
 
 .linkStyle {
   color: rgba(0, 0, 0, 0.9);

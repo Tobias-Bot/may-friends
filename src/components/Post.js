@@ -1,4 +1,5 @@
 import React from "react";
+import bridge from "@vkontakte/vk-bridge";
 import Transition from "react-transition-group/Transition";
 
 import "../styles/Post.css";
@@ -7,13 +8,21 @@ class Post extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      post: this.props.data,
       savedPosts: [],
       show: false,
+      like: false,
     };
 
-    this.getRandom = this.getRandom.bind(this);
+    this.topic_id = 798;
+    this.topicName = "";
+
+    this.token =
+      "f97761ee8a2f12188b1a52d0c7f149ddbeb68151e0dc71c91d945a04eac7f0d0aef3bb0cdbcfe5293ef47";
+    this.group_id = 140403026;
+
     this.getSavedPosts = this.getSavedPosts.bind(this);
-    //this.likePost = this.likePost.bind(this);
+    this.likePost = this.likePost.bind(this);
     this.getPostText = this.getPostText.bind(this);
   }
 
@@ -35,12 +44,6 @@ class Post extends React.Component {
     }
   }
 
-  getRandom(min, max) {
-    let rand = min - 0.5 + Math.random() * (max - min + 1);
-
-    return Math.round(rand);
-  }
-
   getPostText() {
     let form = this.props.data.text;
     let text = "";
@@ -53,36 +56,41 @@ class Post extends React.Component {
     return text;
   }
 
-  // likePost(id) {
-  //   let posts = [];
+  likePost() {
+    if (!this.state.like) {
+      let post = this.props.data;
+      // let user = this.props.user;
 
-  //   let str = localStorage.getItem("savedPosts");
+      // let userLike = {
+      //   name: user.name,
+      //   photo: user.photo,
+      //   url: user.url,
+      //   color: post.color,
+      //   topic: post.topic,
+      // };
 
-  //   if (str) {
-  //     posts = [...posts, ...str.split(",")];
-  //   }
-
-  //   posts.unshift(`${id}`);
-
-  //   this.setState({ savedPosts: posts });
-
-  //   localStorage.setItem("savedPosts", posts.join(","));
-  // }
-
-  // dislikePost(id) {
-  //   let posts = localStorage.getItem("savedPosts").split(",");
-
-  //   let index = posts.findIndex((post_id) => post_id === `${id}`);
-
-  //   posts.splice(index, 1);
-
-  //   this.setState({ savedPosts: posts });
-
-  //   localStorage.setItem("savedPosts", posts.join(","));
-  // }
+      bridge
+        .send("VKWebAppCallAPIMethod", {
+          method: "wall.createComment",
+          params: {
+            owner_id: "-" + this.group_id,
+            post_id: this.topic_id,
+            message:  "like", // JSON.stringify(userLike),
+            from_group: this.group_id,
+            reply_to_comment: post.id,
+            v: "5.126",
+            access_token: this.token,
+          },
+        })
+        .then((r) => {
+          post.likes += 1;
+          this.setState({ like: true, post });
+        });
+    }
+  }
 
   render() {
-    let post = this.props.data;
+    let post = this.state.post;
     let index = this.props.index;
     let postColor = post.color;
     let text = this.getPostText();
@@ -90,18 +98,18 @@ class Post extends React.Component {
     let todayTime = new Date();
     let todayDate = todayTime.toLocaleString("ru", {
       day: "numeric",
-      weekday: "long",
+      weekday: "short",
     });
 
     let time = new Date(post.date * 1000);
     let date = time.toLocaleString("ru", {
       day: "numeric",
-      weekday: "long",
+      weekday: "short",
     });
 
     return (
       <div>
-        <Transition in={this.state.show} timeout={100 + index * 5}>
+        <Transition in={this.state.show} timeout={index * 5}>
           {(state) => {
             return (
               <div className="postView">
@@ -119,7 +127,7 @@ class Post extends React.Component {
                         alt="avatar"
                       />
                     </a>
-                    <div className="col">
+                    <div className="col-6">
                       {post.name}
                       <br />
                       <div
@@ -129,16 +137,11 @@ class Post extends React.Component {
                         {post.topic}
                       </div>
                     </div>
-                    <div
-                      className="col"
-                      style={{
-                        opacity: "0.5",
-                        fontSize: "14px",
-                        marginTop: "5px",
-                      }}
-                    >
+                    <div className="col-3 postInfo">
                       <i className="fas fa-calendar-week"></i>
                       {todayDate === date ? " сегодня" : ` ${date}`}
+                      <br />
+                      <i className="fas fa-heart"></i> {post.likes}
                     </div>
                   </div>
                 </div>
@@ -155,12 +158,23 @@ class Post extends React.Component {
                   rel="noopener noreferrer"
                 >
                   <div
-                    className={"postLikeBtn-" + state}
+                    className={"postMsgBtn-" + state}
                     style={{ backgroundColor: postColor }}
                   >
                     <i className="fas fa-comment"></i>
                   </div>
                 </a>
+                <div
+                  className={"postLikeBtn-" + state}
+                  style={{ backgroundColor: postColor }}
+                  onClick={this.likePost}
+                >
+                  <i
+                    className={
+                      !this.state.like ? "far fa-heart" : "fas fa-heart"
+                    }
+                  ></i>
+                </div>
                 {/* <div
                   className={"shareBtn" + "-" + state}
                   style={{ backgroundColor: postColor }}
@@ -191,6 +205,7 @@ class Post extends React.Component {
             );
           }}
         </Transition>
+        <br />
         <br />
       </div>
     );

@@ -115,7 +115,7 @@ class FindFriend extends React.Component {
 
     bridge
       .send("VKWebAppGetAuthToken", {
-        app_id: 7738603,
+        app_id: 7706189, // 7738603,
         scope: "wall",
       })
       .then((data) => {
@@ -130,6 +130,7 @@ class FindFriend extends React.Component {
               start_comment_id: this.lastComm,
               count: this.offset,
               sort: "desc",
+              thread_items_count: 10,
               v: "5.126",
               access_token: token,
             },
@@ -137,6 +138,8 @@ class FindFriend extends React.Component {
           .then((r) => {
             let comms = r.response.items;
             let posts = [];
+
+            // console.log(comms);
 
             if (comms.length) {
               for (let i = 0; i < comms.length; i++) {
@@ -147,6 +150,7 @@ class FindFriend extends React.Component {
                 post.id = comms[i].id;
                 post.date = comms[i].date;
                 post.text = postData.form;
+                post.likes = comms[i].thread.count;
 
                 post.name = postData.user.name;
                 post.url = postData.user.url;
@@ -189,7 +193,7 @@ class FindFriend extends React.Component {
       return (
         <div key={post.topic + i}>
           {!filter.length || filter.includes(post.topic) ? (
-            <Post data={post} index={i} />
+            <Post data={post} index={i} user={this.props.user} />
           ) : (
             <div></div>
           )}
