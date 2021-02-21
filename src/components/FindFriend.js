@@ -121,7 +121,7 @@ class FindFriend extends React.Component {
       .then((r) => {
         let likes = r.keys[0].value.split(",");
 
-        console.log(likes);
+        // console.log(likes);
 
         this.setState({ savedPosts: likes });
       });

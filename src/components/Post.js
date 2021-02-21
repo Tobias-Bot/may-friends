@@ -14,7 +14,7 @@ class Post extends React.Component {
       like: false,
     };
 
-    this.maxSavedPostsCount = 30;
+    this.maxSavedPostsCount = 50;
 
     this.topic_id = 798;
     this.topicName = "";
