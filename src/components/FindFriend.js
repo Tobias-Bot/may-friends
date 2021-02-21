@@ -13,6 +13,7 @@ class FindFriend extends React.Component {
     super(props);
     this.state = {
       posts: this.props.posts,
+      savedPosts: [],
       checkedTopics: [],
 
       show: false,
@@ -35,11 +36,13 @@ class FindFriend extends React.Component {
     this.checkTopic = this.checkTopic.bind(this);
     this.uncheckTopic = this.uncheckTopic.bind(this);
     this.uncheckAllTopics = this.uncheckAllTopics.bind(this);
+    this.getPostLikes = this.getPostLikes.bind(this);
   }
 
   componentDidMount() {
     this.setState({ show: true });
 
+    this.getPostLikes();
     this.updatePosts();
 
     // setInterval(() => {
@@ -110,6 +113,20 @@ class FindFriend extends React.Component {
     this.setState({ checkedTopics: [] });
   }
 
+  getPostLikes() {
+    bridge
+      .send("VKWebAppStorageGet", {
+        keys: ["may-friends"],
+      })
+      .then((r) => {
+        let likes = r.keys[0].value.split(",");
+
+        console.log(likes);
+
+        this.setState({ savedPosts: likes });
+      });
+  }
+
   loadPosts() {
     this.setState({ postsLoad: true });
 
@@ -130,7 +147,7 @@ class FindFriend extends React.Component {
               start_comment_id: this.lastComm,
               count: this.offset,
               sort: "desc",
-              thread_items_count: 10,
+              // thread_items_count: 10,
               v: "5.126",
               access_token: token,
             },
@@ -193,7 +210,7 @@ class FindFriend extends React.Component {
       return (
         <div key={post.topic + i}>
           {!filter.length || filter.includes(post.topic) ? (
-            <Post data={post} index={i} user={this.props.user} />
+            <Post data={post} index={i} user={this.props.user} savedPosts={this.state.savedPosts} />
           ) : (
             <div></div>
           )}

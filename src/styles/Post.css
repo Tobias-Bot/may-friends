@@ -35,7 +35,8 @@
   position: relative;
   width: 92%;
   padding: 12px 15px;
-  margin-left: 15px;
+  margin-left: 18px;
+  margin-right: 10px;
   border-radius: 0px 20px 20px 20px;
   background-color: #dee1ff;
   color: rgb(0, 0, 0, 0.8);
@@ -47,9 +48,10 @@
 
 .postText-entered {
   position: relative;
-  width: 92%;
+  display: block;
   padding: 12px 15px;
-  margin-left: 15px;
+  margin-left: 18px;
+  margin-right: 10px;
   border-radius: 0px 20px 20px 20px;
   background-color: #dee1ff;
   color: rgb(0, 0, 0, 0.8);
@@ -85,14 +87,15 @@
 
 .postMsgBtn-entering {
   position: absolute;
-  bottom: -30px;
-  right: 95px;
-  height: 47px;
-  width: 47px;
+  bottom: -35px;
+  right: 100px;
+  height: 55px;
+  width: 55px;
   padding: 8px;
-  font-size: 20px;
+  font-size: 17px;
   color: rgba(0, 0, 0, 0.9);
   background-color: rgb(255, 195, 247);
+  border: 5px solid rgb(31, 31, 51);
   border-radius: 100px;
   box-shadow: 2px 3px 20px rgba(0, 0, 0, 0.6);
   text-align: center;
@@ -100,19 +103,19 @@
 }
 .postMsgBtn-entered {
   position: absolute;
-  bottom: -30px;
-  right: 95px;
-  height: 47px;
-  width: 47px;
+  bottom: -35px;
+  right: 100px;
+  height: 55px;
+  width: 55px;
   padding: 8px;
-  font-size: 20px;
+  font-size: 17px;
   color: rgba(0, 0, 0, 0.7);
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 100px;
   text-align: center;
-  box-shadow: 2px 3px 20px rgba(0, 0, 0, 0.6);
+  border: 5px solid rgb(31, 31, 51);
   opacity: 1;
-  transition: 0.5s all;
+  transition: 1s all;
 }
 .postMsgBtn-entered:hover {
   cursor: pointer;
@@ -121,13 +124,14 @@
 .postLikeBtn-entering {
   position: absolute;
   bottom: -30px;
-  right: 30px;
-  height: 55px;
-  width: 55px;
+  right: 25px;
+  height: 65px;
+  width: 65px;
   padding: 8px;
-  font-size: 26px;
+  font-size: 24px;
   color: rgba(0, 0, 0, 0.9);
   background-color: rgb(255, 195, 247);
+  border: 6px solid rgb(31, 31, 51);
   border-radius: 100px;
   box-shadow: 2px 3px 20px rgba(0, 0, 0, 0.6);
   text-align: center;
@@ -136,18 +140,18 @@
 .postLikeBtn-entered {
   position: absolute;
   bottom: -30px;
-  right: 30px;
-  height: 55px;
-  width: 55px;
+  right: 25px;
+  height: 65px;
+  width: 65px;
   padding: 8px;
-  font-size: 26px;
+  font-size: 24px;
   color: rgba(0, 0, 0, 0.7);
   background-color: rgba(0, 0, 0, 0.1);
+  border: 6px solid rgb(31, 31, 51);
   border-radius: 100px;
   text-align: center;
-  box-shadow: 2px 3px 20px rgba(0, 0, 0, 0.6);
   opacity: 1;
-  transition: 0.5s all;
+  transition: 1s all;
 }
 .postLikeBtn-entered:hover {
   cursor: pointer;

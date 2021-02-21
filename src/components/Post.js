@@ -14,6 +14,8 @@ class Post extends React.Component {
       like: false,
     };
 
+    this.maxSavedPostsCount = 30;
+
     this.topic_id = 798;
     this.topicName = "";
 
@@ -21,27 +23,28 @@ class Post extends React.Component {
       "f97761ee8a2f12188b1a52d0c7f149ddbeb68151e0dc71c91d945a04eac7f0d0aef3bb0cdbcfe5293ef47";
     this.group_id = 140403026;
 
-    this.getSavedPosts = this.getSavedPosts.bind(this);
     this.likePost = this.likePost.bind(this);
     this.getPostText = this.getPostText.bind(this);
+    this.savePostLike = this.savePostLike.bind(this);
+    this.isLiked = this.isLiked.bind(this);
   }
 
   componentDidMount() {
-    this.setState({ show: true });
-
-    this.getSavedPosts();
+    let like = this.isLiked();
+    this.setState({ show: true, like });
   }
 
   componentWillUnmount() {
     this.setState({ show: false });
   }
 
-  getSavedPosts() {
-    let posts = localStorage.getItem("savedPosts");
+  isLiked() {
+    let postId = this.props.data.id;
+    let posts = this.props.savedPosts;
 
-    if (posts) {
-      this.setState({ savedPosts: posts.split(",") });
-    }
+    let isLiked = posts.includes(`${postId}`);
+
+    return isLiked;
   }
 
   getPostText() {
@@ -54,6 +57,22 @@ class Post extends React.Component {
     }
 
     return text;
+  }
+
+  savePostLike() {
+    let post = this.props.data;
+    let savedPosts = this.props.savedPosts;
+
+    savedPosts.unshift(post.id);
+
+    if (savedPosts.length > this.maxSavedPostsCount) {
+      savedPosts.splice(savedPosts.length - 1, 1);
+    }
+
+    bridge.send("VKWebAppStorageSet", {
+      key: "may-friends",
+      value: savedPosts.join(","),
+    });
   }
 
   likePost() {
@@ -75,7 +94,7 @@ class Post extends React.Component {
           params: {
             owner_id: "-" + this.group_id,
             post_id: this.topic_id,
-            message:  "like", // JSON.stringify(userLike),
+            message: "like", // JSON.stringify(userLike),
             from_group: this.group_id,
             reply_to_comment: post.id,
             v: "5.126",
@@ -84,7 +103,9 @@ class Post extends React.Component {
         })
         .then((r) => {
           post.likes += 1;
+
           this.setState({ like: true, post });
+          this.savePostLike();
         });
     }
   }
@@ -137,7 +158,7 @@ class Post extends React.Component {
                         {post.topic}
                       </div>
                     </div>
-                    <div className="col-3 postInfo">
+                    <div className="col-4 postInfo">
                       <i className="fas fa-calendar-week"></i>
                       {todayDate === date ? " сегодня" : ` ${date}`}
                       <br />
