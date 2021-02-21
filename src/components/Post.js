@@ -146,6 +146,7 @@ class Post extends React.Component {
                         className={"postPhoto-" + state}
                         src={post.photo}
                         alt="avatar"
+                        onClick={this.likePost}
                       />
                     </a>
                     <div className="col-6">

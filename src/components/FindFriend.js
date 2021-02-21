@@ -132,7 +132,7 @@ class FindFriend extends React.Component {
 
     bridge
       .send("VKWebAppGetAuthToken", {
-        app_id: 7706189, // 7738603,
+        app_id: 7738603, // 7706189,
         scope: "wall",
       })
       .then((data) => {
