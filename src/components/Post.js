@@ -182,6 +182,7 @@ class Post extends React.Component {
                   <div
                     className={"postMsgBtn-" + state}
                     style={{ backgroundColor: postColor }}
+                    onClick={this.likePost}
                   >
                     <i className="fas fa-comment"></i>
                   </div>
