@@ -3,17 +3,13 @@ import bridge from "@vkontakte/vk-bridge";
 
 import "../App.css";
 import topics from "../data/topics";
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
 
 class InfoPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      infoMain: `Май-френдс — приложение для знакомств и общения.`,
-      privacy: `Опубликованные записи не видят твои друзья или подписчики.
-      Записи можно просматривать только через это приложение.`,
-      you: `Знакомься, общайся, ищи свою родственную душу!`,
-      info: `Посты удаляются автоматически.`,
+      info: `Опубликованные записи удаляются автоматически.`,
     };
 
     this.shareApp = this.shareApp.bind(this);
@@ -47,38 +43,13 @@ class InfoPage extends React.Component {
   }
 
   render() {
-    let infoMain = this.state.infoMain;
-    let privacy = this.state.privacy;
-    let you = this.state.you;
     let info = this.state.info;
 
     let topics = this.getTopicsInfo();
 
     return (
       <div>
-        <div className="infoText">{infoMain}</div>
-        <div className="infoText">{privacy}</div>
-        <div className="infoText">{you}</div>
         <div className="infoText">{info}</div>
-        <div className="btnsTitle">приложение</div>
-        <div className="btnsBackground">
-          <div className="row mb-4">
-            <div className="col">
-              <NavLink className="linkStyle" to="search">
-                <div className="icon">
-                  <i className="fas fa-icons"></i>
-                  <span className="iconTitle">публикации</span>
-                </div>
-              </NavLink>
-            </div>
-            <div className="col">
-              <div className="icon" onClick={this.shareApp}>
-                <i className="fas fa-share-square"></i>
-                <span className="iconTitle">поделиться</span>
-              </div>
-            </div>
-          </div>
-        </div>
 
         <div className="btnsTitle">тематики записей</div>
         <div className="btnsBackground">{topics}</div>

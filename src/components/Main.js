@@ -6,7 +6,9 @@ import Transition from "react-transition-group/Transition";
 
 import topics from "../data/topics";
 import InfoPage from "./InfoPage";
+import MenuPage from "./MenuPage";
 import FindFriend from "./FindFriend";
+import ChatsPage from "./chatsPage";
 
 import "../App.css";
 
@@ -282,7 +284,7 @@ class Main extends React.Component {
     let styles = this.state.headerStyles;
     let form = this.state.modalForm;
     let tabs = this.getTopics();
-    let formValid = this.state.formValid;
+    // let formValid = this.state.formValid;
 
     let show = this.state.show;
 
@@ -364,7 +366,7 @@ class Main extends React.Component {
         >
           <HashRouter>
             <Switch>
-              <Route exact path="/">
+              <Route exact path="/info">
                 <InfoPage />
               </Route>
               <Route exact path="/search">
@@ -379,9 +381,20 @@ class Main extends React.Component {
                   startLoad={this.startLoad}
                 />
               </Route>
+              <Route exact path="/chats">
+                <ChatsPage />
+              </Route>
+              <Route exact path="/">
+                <MenuPage />
+              </Route>
             </Switch>
           </HashRouter>
-          <a href="https://vk.com/warmay" className="linkStyle">
+          <a
+            href="https://vk.com/warmay"
+            className="linkStyle"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <div className="copyrightText">Май</div>
           </a>
         </div>
@@ -391,6 +404,15 @@ class Main extends React.Component {
               <NavLink className="linkStyle" to="/search">
                 <div className="btnFooter">
                   <i className="fas fa-icons"></i>
+                </div>
+              </NavLink>
+            ) : (
+              ""
+            )}
+            {!show ? (
+              <NavLink className="linkStyle" to="/chats">
+                <div className="btnFooter">
+                  <i className="fas fa-comments"></i>
                 </div>
               </NavLink>
             ) : (
@@ -418,6 +440,15 @@ class Main extends React.Component {
             </div>
             {!show ? (
               <NavLink className="linkStyle" to="/">
+                <div className="btnFooter">
+                  <i className="fas fa-home"></i>
+                </div>
+              </NavLink>
+            ) : (
+              ""
+            )}
+            {!show ? (
+              <NavLink className="linkStyle" to="/info">
                 <div className="btnFooter">
                   <i className="fas fa-info-circle"></i>
                 </div>

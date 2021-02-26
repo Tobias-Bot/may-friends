@@ -1,0 +1,67 @@
+.chatView {
+    position: relative;
+    width: 95%;
+    height: 200px;
+    margin: 15px 10px 20px 10px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.8);
+  }
+  
+  .picBlackout {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    padding: 15px;
+    border-radius: 10px;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  
+  .chatTitle {
+    position: relative;
+    z-index: 1;
+    max-width: 80%;
+    font-weight: 500;
+    font-size: 20px;
+    color: white;
+  }
+  
+  .chatText {
+    position: relative;
+    z-index: 1;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 70%;
+    max-width: 80%;
+    margin-top: 15px;
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+  }
+  
+  .chatComeInBtn {
+    position: absolute;
+    z-index: 1;
+    right: 10px;
+    top: 8px;
+    font-weight: 500;
+    font-size: 18px;
+    padding: 3px 8px;
+    border-radius: 10px;
+    padding: 1px 12px;
+    color: #cbcfff;
+    border: 2px solid #adb3ff;
+    background-color: rgba(0, 0, 0, 0.7);
+    outline: none;
+    box-shadow: 0px 3px 8px black;
+    transition: 0.1s all;
+  }
+  .chatComeInBtn:hover,
+  .chatComeInBtn:focus {
+    cursor: pointer;
+    outline: none;
+    background-color: rgba(0, 0, 0, 0.9);
+  }
+  

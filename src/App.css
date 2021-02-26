@@ -40,6 +40,10 @@
   transition: 0.8s all;
 }
 
+.col {
+  padding: 0 8px;
+}
+
 .titleApp {
   font-size: 22px;
   font-family: Caveat-SemiBold;
@@ -181,9 +185,9 @@
 .btnFooter {
   position: relative;
   display: inline;
-  margin: 0 28px;
+  margin: 0 20px;
   text-align: center;
-  font-size: 23px;
+  font-size: 22px;
   overflow: hidden;
   color: #b4b9ff;
   transition: 0.1s all;
@@ -197,7 +201,7 @@
 .btnFooterMain {
   position: relative;
   display: inline-block;
-  margin: 0 28px;
+  margin: 0 15px;
   text-align: center;
   border-radius: 5px;
   padding: 0px 12px;
