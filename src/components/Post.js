@@ -163,7 +163,7 @@ class Post extends React.Component {
                       <i className="fas fa-calendar-week"></i>
                       {todayDate === date ? " сегодня" : ` ${date}`}
                       <br />
-                      <i className="fas fa-heart"></i> {post.likes}
+                      <i className="fas fa-eye"></i> {post.likes}
                     </div>
                   </div>
                 </div>
@@ -184,7 +184,11 @@ class Post extends React.Component {
                     style={{ backgroundColor: postColor }}
                     onClick={this.likePost}
                   >
-                    <i className="fas fa-comment"></i>
+                    <i
+                      className={
+                        !this.state.like ? "far fa-heart" : "fas fa-heart"
+                      }
+                    ></i>
                   </div>
                 </a>
                 <div
@@ -192,11 +196,7 @@ class Post extends React.Component {
                   style={{ backgroundColor: postColor }}
                   onClick={this.likePost}
                 >
-                  <i
-                    className={
-                      !this.state.like ? "far fa-heart" : "fas fa-heart"
-                    }
-                  ></i>
+                  <i className="fas fa-comment"></i>
                 </div>
                 {/* <div
                   className={"shareBtn" + "-" + state}
