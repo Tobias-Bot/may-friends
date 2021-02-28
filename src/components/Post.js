@@ -173,6 +173,18 @@ class Post extends React.Component {
                   style={{ backgroundColor: postColor }}
                   dangerouslySetInnerHTML={{ __html: text }}
                 ></div>
+
+                <div
+                  className={"postMsgBtn-" + state}
+                  style={{ backgroundColor: postColor }}
+                  onClick={this.likePost}
+                >
+                  <i
+                    className={
+                      !this.state.like ? "far fa-heart" : "fas fa-heart"
+                    }
+                  ></i>
+                </div>
                 <a
                   className="linkStyle"
                   href={post.url}
@@ -180,24 +192,13 @@ class Post extends React.Component {
                   rel="noopener noreferrer"
                 >
                   <div
-                    className={"postMsgBtn-" + state}
+                    className={"postLikeBtn-" + state}
                     style={{ backgroundColor: postColor }}
                     onClick={this.likePost}
                   >
-                    <i
-                      className={
-                        !this.state.like ? "far fa-heart" : "fas fa-heart"
-                      }
-                    ></i>
+                    <i className="fas fa-comment"></i>
                   </div>
                 </a>
-                <div
-                  className={"postLikeBtn-" + state}
-                  style={{ backgroundColor: postColor }}
-                  onClick={this.likePost}
-                >
-                  <i className="fas fa-comment"></i>
-                </div>
                 {/* <div
                   className={"shareBtn" + "-" + state}
                   style={{ backgroundColor: postColor }}
