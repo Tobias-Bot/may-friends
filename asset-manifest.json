@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/may-friends/static/css/main.2a2b3bda.chunk.css",
+    "main.js": "/may-friends/static/js/main.aca8d5c7.chunk.js",
+    "main.js.map": "/may-friends/static/js/main.aca8d5c7.chunk.js.map",
+    "runtime-main.js": "/may-friends/static/js/runtime-main.1524bcfd.js",
+    "runtime-main.js.map": "/may-friends/static/js/runtime-main.1524bcfd.js.map",
+    "static/js/2.4bbf7e9f.chunk.js": "/may-friends/static/js/2.4bbf7e9f.chunk.js",
+    "static/js/2.4bbf7e9f.chunk.js.map": "/may-friends/static/js/2.4bbf7e9f.chunk.js.map",
+    "index.html": "/may-friends/index.html",
+    "static/css/main.2a2b3bda.chunk.css.map": "/may-friends/static/css/main.2a2b3bda.chunk.css.map",
+    "static/js/2.4bbf7e9f.chunk.js.LICENSE.txt": "/may-friends/static/js/2.4bbf7e9f.chunk.js.LICENSE.txt",
+    "static/media/App.css": "/may-friends/static/media/Caveat-SemiBold.e7ed0c9b.ttf",
+    "static/media/g1.87a8e003.gif": "/may-friends/static/media/g1.87a8e003.gif",
+    "static/media/g2.7515bf2a.gif": "/may-friends/static/media/g2.7515bf2a.gif",
+    "static/media/m.9f154094.gif": "/may-friends/static/media/m.9f154094.gif",
+    "static/media/s.9f2d746a.gif": "/may-friends/static/media/s.9f2d746a.gif"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.1524bcfd.js",
+    "static/js/2.4bbf7e9f.chunk.js",
+    "static/css/main.2a2b3bda.chunk.css",
+    "static/js/main.aca8d5c7.chunk.js"
+  ]
+}
