@@ -1,3 +1,15 @@
+# Description
+
+App for finding friends. You can view all published profiles, create your own profile, like posts, and view user profiles. Several topics for finding friends are available in the application.
+
+# Used
+
+React.js, HTML5, CSS3
+
+# Review
+
+[watch the video](https://youtu.be/9IBGN9aEB5o)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
