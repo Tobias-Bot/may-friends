@@ -176,7 +176,7 @@ class Post extends React.Component {
 
                 <a
                   className="linkStyle"
-                  href={`https://vk.com/call?id=${post.id}`}
+                  href={`https://vk.com/call?id=${post.user_id}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
