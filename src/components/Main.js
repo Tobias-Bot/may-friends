@@ -393,7 +393,7 @@ class Main extends React.Component {
         <div className="footer">
           <HashRouter>
             {!show ? (
-              <NavLink className="linkStyle" to="/search">
+              <NavLink className="linkStyle" to="/">
                 <div className="btnFooter">
                   <i className="fas fa-icons"></i>
                 </div>
