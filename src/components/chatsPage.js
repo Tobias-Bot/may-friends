@@ -21,7 +21,7 @@ class ChatsPage extends React.Component {
           <div
             className="chatView"
             style={{
-              background: `url(${chat.background}) center/100% no-repeat`,
+              backgroundColor: chat.color,
             }}
           >
             <div className="picBlackout">

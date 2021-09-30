@@ -174,17 +174,20 @@ class Post extends React.Component {
                   dangerouslySetInnerHTML={{ __html: text }}
                 ></div>
 
-                <div
-                  className={"postMsgBtn-" + state}
-                  style={{ backgroundColor: postColor }}
-                  onClick={this.likePost}
+                <a
+                  className="linkStyle"
+                  href={`https://vk.com/call?id=${post.id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  <i
-                    className={
-                      !this.state.like ? "far fa-heart" : "fas fa-heart"
-                    }
-                  ></i>
-                </div>
+                  <div
+                    className={"postMsgBtn-" + state}
+                    style={{ backgroundColor: postColor }}
+                  >
+                    <i className="fas fa-phone"></i>
+                  </div>
+                </a>
+
                 <a
                   className="linkStyle"
                   href={post.url}

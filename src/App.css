@@ -174,7 +174,7 @@
   bottom: 0px;
   z-index: 1;
   width: 100%;
-  height: 55px;
+  height: 65px;
   padding: 8px 0 0 0;
   border-radius: 10px 10px 0 0;
   border-top: 2px solid #ffade4;
@@ -185,9 +185,9 @@
 .btnFooter {
   position: relative;
   display: inline;
-  margin: 0 20px;
+  margin: 0 25px;
   text-align: center;
-  font-size: 22px;
+  font-size: 25px;
   overflow: hidden;
   color: #b4b9ff;
   transition: 0.1s all;

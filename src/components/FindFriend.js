@@ -74,8 +74,8 @@ class FindFriend extends React.Component {
           style={
             t
               ? {
-                  backgroundColor: topic.color,
-                }
+                backgroundColor: topic.color,
+              }
               : { backgroundColor: "rgba(37, 37, 51)", color: "#b9bfff" }
           }
           onClick={() =>
@@ -128,6 +128,8 @@ class FindFriend extends React.Component {
   }
 
   loadPosts() {
+    if (this.currOffset > 100) return;
+
     this.setState({ postsLoad: true });
 
     bridge

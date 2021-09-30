@@ -5,8 +5,6 @@ import { Route, HashRouter, Switch, NavLink } from "react-router-dom";
 import Transition from "react-transition-group/Transition";
 
 import topics from "../data/topics";
-import InfoPage from "./InfoPage";
-import MenuPage from "./MenuPage";
 import FindFriend from "./FindFriend";
 import ChatsPage from "./chatsPage";
 
@@ -366,10 +364,7 @@ class Main extends React.Component {
         >
           <HashRouter>
             <Switch>
-              <Route exact path="/info">
-                <InfoPage />
-              </Route>
-              <Route exact path="/search">
+              <Route exact path="/">
                 <FindFriend
                   user={this.state.submitUserForm}
                   topic_id={this.topic_id}
@@ -383,9 +378,6 @@ class Main extends React.Component {
               </Route>
               <Route exact path="/chats">
                 <ChatsPage />
-              </Route>
-              <Route exact path="/">
-                <MenuPage />
               </Route>
             </Switch>
           </HashRouter>
@@ -404,15 +396,6 @@ class Main extends React.Component {
               <NavLink className="linkStyle" to="/search">
                 <div className="btnFooter">
                   <i className="fas fa-icons"></i>
-                </div>
-              </NavLink>
-            ) : (
-              ""
-            )}
-            {!show ? (
-              <NavLink className="linkStyle" to="/chats">
-                <div className="btnFooter">
-                  <i className="fas fa-comments"></i>
                 </div>
               </NavLink>
             ) : (
@@ -439,18 +422,9 @@ class Main extends React.Component {
               )}
             </div>
             {!show ? (
-              <NavLink className="linkStyle" to="/">
+              <NavLink className="linkStyle" to="/chats">
                 <div className="btnFooter">
-                  <i className="fas fa-home"></i>
-                </div>
-              </NavLink>
-            ) : (
-              ""
-            )}
-            {!show ? (
-              <NavLink className="linkStyle" to="/info">
-                <div className="btnFooter">
-                  <i className="fas fa-info-circle"></i>
+                  <i className="fas fa-comments"></i>
                 </div>
               </NavLink>
             ) : (
